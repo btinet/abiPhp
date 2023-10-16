@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}React Template{% endblock %}
+
+{% block local_nav %}
+    <nav class="UnderlineNav UnderlineNav--full position-sticky top-0 color-bg-default" style="z-index: 999">
+        <div class="container-lg UnderlineNav-container px-3">
+            <div class="UnderlineNav-body">
+                <a class="UnderlineNav-item"><i class="cil-group mr-1"></i>Stammdaten</a>
+                <a class="UnderlineNav-item" aria-current="true"><i class="cil-school mr-1"></i>Prüfungen</a>
+                <a class="UnderlineNav-item"><i class="cil-library-add mr-1"></i>Import</a>
+                <a class="UnderlineNav-item"><i class="cil-cloud-download mr-1"></i>Export</a>
+            </div>
+            <div class="UnderlineNav-actions">
+                <a class="UnderlineNav-item"><i class="cil-settings mr-1"></i>Einstellungen</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="PageLayout">
+        <div class="clearfix gutter">
+            <div class="col-12 float-left">
+                <div class="PageLayout-header">
+                    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+                        <div>
+                            <h1>Person erstellen</h1>
+                            <h3>Datensatz anlegen</h3>
+                        </div>
+                        <div class="BtnGroup d-none d-lg-block">
+                            <a href="#" class="BtnGroup-item btn"><i class="cil-print"></i></a>
+                            <a href="#" class="BtnGroup-item btn"><i class="cil-file"></i></a>
+                        </div>
+                    </div>
+                    <div class="Box Box--condensed Box-body Box--danger color-bg-danger mb-5">
+                        <div class="d-flex flex-justify-start flex-items-center">
+                            <i class="cil-lock-locked color-fg-danger d-block mr-2" style="font-size: 1.2rem"></i>
+                            <span class="color-fg-danger">Alle persönlichen Angaben werden verschlüsselt gespeichert und sind bei unbefugtem Zugriff unbrauchbar.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7 float-left">
+                <div class="PageLayout-content">
+                    <form class="mb-5" id="form">
+
+                        <h4 class="border-bottom">Persönliche Daten</h4>
+
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="firstname">Vorname</label>
+                            </div>
+                            <div class="form-group-body">
+                                <input class="form-control width-full required" required type="text" id="firstname"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="lastname">Nachname</label>
+                            </div>
+                            <div class="form-group-body">
+                                <input class="form-control width-full" type="text" id="lastname"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="birthdate">Geburtsdatum</label>
+                            </div>
+                            <div class="form-group-body">
+                                <input class="form-control width-full" type="date" id="birthdate"/>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-5 border-bottom">Qualifikationsphase</h4>
+
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="Topics">Tutorium</label>
+                            </div>
+                            <div class="form-group-body">
+                                <select class="form-select width-full" aria-label="Topics">
+                                    <option selected>Person wählen...</option>
+                                    <option>Kottwitz</option>
+                                    <option>Haase</option>
+                                    <option>Meiners</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="exam_date">Abschlussjahr</label>
+                            </div>
+                            <div class="form-group-body">
+                                <input class="form-control width-full" type="text" id="exam_date"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group-header">
+                                <label for="exam_points">Kurspunkte</label>
+                            </div>
+                            <div class="form-group-body">
+                                <input class="form-control width-full" type="text" id="exam_points" />
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-5">
+                            <div class="form-group-body">
+                                <button type="submit" class="btn btn-primary mr-1"  id="lastname">Speichern</button>
+                                <a href="#"  class="btn">Abbrechen</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 float-left">
+                <div class="PageLayout-pane">
+                </div>
+            </div>
+            <div class="col-12 float-left">
+                <table class="compact hover" id="example">
+                    <caption>Prüflinge</caption>
+                    <thead class="border-top">
+                    <tr class="border-bottom">
+                        <th class="TableObject-item text-left">Name</th>
+                        <th class="TableObject-item text-left">Vorname</th>
+                        <th class="TableObject-item text-right">Geburtsdatum</th>
+                        <th class="TableObject-item text-right">Abschlussjahr</th>
+                        <th class="TableObject-item text-left">Tutorium</th>
+                        <th class="TableObject-item text-right">Kursblock</th>
+                        <th class="TableObject-item text-right">Aktion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-bottom">
+                        <td class="TableObject-item">Wagner</td>
+                        <td class="TableObject-item">Benjamin</td>
+                        <td class="TableObject-item text-right">16.02.1987</td>
+                        <td class="TableObject-item text-right">2024</td>
+                        <td class="TableObject-item">Kottwitz</td>
+                        <td class="TableObject-item text-right">412</td>
+                        <td class="TableObject-item text-right">
+                            <div class="BtnGroup">
+                                <a href="#" class="btn btn-sm btn-outline BtnGroup-item"><i class="cil-pen"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline BtnGroup-item"><i class="cil-calculator"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
