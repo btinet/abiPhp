@@ -13,6 +13,15 @@ class AppController extends AbstractController
     public function index(): Response
     {
         return $this->render('app/index.html.twig', [
+            'local_nav' => 'pupil'
+        ]);
+    }
+
+    #[Route('/new', name: 'new')]
+    public function new(): Response
+    {
+        return $this->render('app/new.html.twig', [
+            'local_nav' => 'pupil'
         ]);
     }
 }
