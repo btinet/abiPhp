@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block local_nav %}
+    <nav class="UnderlineNav UnderlineNav--full position-sticky top-0 color-bg-default" style="z-index: 999">
+        <div class="container-lg UnderlineNav-container px-3">
+            <div class="UnderlineNav-body">
+                <a href="{{ url('app_pupil_crud_index') }}" class="UnderlineNav-item" {{ local_nav == 'login' ? 'aria-current="true"' : '' }}><i class="cil-user mr-1"></i>Login</a>
+                <a class="UnderlineNav-item" {{ local_nav == 'exam' ? 'aria-current="true"' : '' }}><i class="cil-user-plus mr-1"></i>Registrieren</a>
+                <a class="UnderlineNav-item"><i class="cil-envelope-open mr-1"></i>Passwort-Reset</a>
+            </div>
+            <div class="UnderlineNav-actions">
+            </div>
+        </div>
+    </nav>
+{% endblock %}

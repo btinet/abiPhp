@@ -17,11 +17,4 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new')]
-    public function new(): Response
-    {
-        return $this->render('app/new.html.twig', [
-            'local_nav' => 'pupil'
-        ]);
-    }
 }

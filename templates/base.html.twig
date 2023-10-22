@@ -34,6 +34,11 @@
                 </div>
             </div>
             {% block footer %}
+                <div class="container-lg my-5 px-3 text-right">
+                    {% if app.user %}
+                        Eingeloggt als {{ app.user }} | <a href="#" class="btn-link">Einstellungen</a>
+                    {% endif %}
+                </div>
                 <div class="AppFrame-footer color-bg-inset">
                     <div class="container-lg p-3">
                         &copy;2023 - Benjamin Wagner

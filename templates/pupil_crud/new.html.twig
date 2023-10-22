@@ -25,7 +25,7 @@
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    <form class="mb-5" id="form">
+                    <form class="mb-5" id="form" method="post" action="{{ url('app_pupil_crud_new') }}">
 
                         <h4 class="border-bottom">Persönliche Daten</h4>
 
@@ -62,10 +62,12 @@
                             </div>
                             <div class="form-group-body">
                                 <select class="form-select width-full" aria-label="Topics">
-                                    <option selected>Person wählen...</option>
-                                    <option>Kottwitz</option>
-                                    <option>Haase</option>
-                                    <option>Meiners</option>
+                                    <option selected value="">Person wählen...</option>
+                                    {% for teacher in teachers|sort((a, b) => a.lastname <=> b.lastname) %}
+                                        <option value="{{ teacher.id }}">{{ teacher.lastname }}</option>
+                                    {% else %}
+                                        <option value="">keine Lehrkräfte vorhanden</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -74,7 +76,7 @@
                                 <label for="exam_date">Abschlussjahr</label>
                             </div>
                             <div class="form-group-body">
-                                <input class="form-control width-full" type="text" id="exam_date"/>
+                                <input class="form-control width-full" type="number" min="2000" max="2099" step="1" value="{{ date('now')|date('Y') }}" id="exam_date" required />
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,7 +91,7 @@
                         <div class="form-group mt-5">
                             <div class="form-group-body">
                                 <button type="submit" class="btn btn-primary mr-1"  id="lastname">Speichern</button>
-                                <a href="{{ url('app_index') }}"  class="btn">Abbrechen</a>
+                                <a href="{{ url('app_pupil_crud_index') }}"  class="btn">Abbrechen</a>
                             </div>
                         </div>
                     </form>

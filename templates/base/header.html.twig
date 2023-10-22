@@ -9,15 +9,21 @@
             Berechnen
         </a>
     </div>
-    <div class="Header-item">
-        <a href="{{ url('app_index') }}" class="Header-link">
-            Verwaltung
-        </a>
-    </div>
+    {% if app.user %}
+        <div class="Header-item">
+            <a href="{{ url('app_pupil_crud_index') }}" class="Header-link">
+                Verwaltung
+            </a>
+        </div>
+    {% endif %}
     <!-- Form item  -->
     <div class="Header-item--full">
     </div>
     <div class="Header-item">
-        <a href="#" class="Header-link"><i class="bi bi-box-arrow-right"></i></a>
+        {% if app.user %}
+            <a href="{{ url('app_logout') }}" class="Header-link">Logout</a>
+            {% else %}
+                <a href="{{ url('app_login') }}" class="Header-link">Login</a>
+        {% endif %}
     </div>
 </div>
