@@ -2,36 +2,80 @@
 
 {% block title %}Teacher index{% endblock %}
 
+{% block sidebar %}
+    <div class="p-3">
+        <h4>Entitäten</h4>
+    </div>
+
+    <div class="SideNav">
+        <a href="#" class="SideNav-item">
+            <i class="cil cil-user SideNav-icon"></i>
+            Benutzerkonten
+        </a>
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item" aria-current="true">
+            <i class="cil cil-school SideNav-icon"></i>
+            Lehrkräfte
+        </a>
+        <a href="#" class="SideNav-item">
+            <i class="cil cil-excerpt SideNav-icon"></i>
+            Punktetabellen
+        </a>
+    </div>
+{% endblock %}
+
 {% block body %}
-    <h1>Teacher index</h1>
+    <div class="PageLayout">
+        <div class="clearfix gutter">
+            <div class="col-12 float-left">
+                <div class="PageLayout-header mb-5">
+                    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+                        <div>
+                            <h1>Lehrkräfte / Tutorium</h1>
+                            <h3>Systemkonfiguration</h3>
+                        </div>
+                    </div>
+                    <table class="compact hover" id="example">
+                        <caption>Für Tutorien einsetzbare Lehrkräfte</caption>
+                        <thead>
+                        <tr>
+                            <th>Nachname</th>
+                            <th>Vorname</th>
+                            <th class="text-right">Lernende</th>
+                            <th class="text-right">Aktion</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for teacher in teachers %}
+                            <tr>
+                                <td>{{ teacher.lastname }}</td>
+                                <td>{{ teacher.firstname }}</td>
+                                <td class="text-right">{{ teacher.pupils.count }}</td>
+                                <td class="text-right">
+                                    <a href="{{ path('app_teacher_crud_show', {'id': teacher.id}) }}">anzeigen</a>
+                                    <a href="{{ path('app_teacher_crud_edit', {'id': teacher.id}) }}">bearbeiten</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Keine Einträge vorhanden.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7 float-left">
+                <div class="PageLayout-content">
+                    <a href="{{ path('app_teacher_crud_new') }}" class="btn btn-primary">Neuer Datensatz</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 float-left">
+                <div class="PageLayout-pane">
 
-    <table class="compact hover" id="example">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for teacher in teachers %}
-            <tr>
-                <td>{{ teacher.id }}</td>
-                <td>{{ teacher.firstname }}</td>
-                <td>{{ teacher.lastname }}</td>
-                <td>
-                    <a href="{{ path('app_teacher_crud_show', {'id': teacher.id}) }}">show</a>
-                    <a href="{{ path('app_teacher_crud_edit', {'id': teacher.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_teacher_crud_new') }}">Create new</a>
+                </div>
+            </div>
+            <div class="col-12 float-left">
+            </div>
+        </div>
+    </div>
 {% endblock %}

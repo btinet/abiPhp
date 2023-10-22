@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/teacher/crud')]
+#[Route('/admin/setup/teacher')]
 class TeacherCrudController extends AbstractController
 {
     #[Route('/', name: 'app_teacher_crud_index', methods: ['GET'])]

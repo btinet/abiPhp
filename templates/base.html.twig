@@ -16,7 +16,7 @@
         {% endblock %}
     </head>
     <body>
-        <div class="AppFrame-main">
+        <div class="AppFrame-main pb-5" style="height: 100%">
             <div class="AppFrame-header-wrapper">
                 <div class="AppFrame-header color-bg-emphasis color-fg-on-emphasis">
                     {% block header %}
@@ -27,20 +27,25 @@
                     {% block subheader %}{% endblock %}
                 </div>
             </div>
-            <div class="AppFrame-body pb-12">
+            <div class="AppFrame-body" style="height: 100%">
                 {% block local_nav %}{% endblock %}
-                <div class="container-lg px-3 mt-5">
-                    {% block body %}{% endblock %}
+                <div class="Layout Layout--sidebar-wide" style="height: 100%">
+                    <div class="Layout-main">
+                        <div class="pb-12 px-3 pl-md-0 pr-md-5 mt-5">
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
+                    <div class="Layout-sidebar color-bg-inset border-right" style="height: 100%">
+                        <div class="stick-to-top mb-12">
+                            {% block sidebar %}{% endblock %}
+                        </div>
+                    </div>
                 </div>
+
             </div>
             {% block footer %}
-                <div class="container-lg my-5 px-3 text-right">
-                    {% if app.user %}
-                        Eingeloggt als {{ app.user }} | <a href="#" class="btn-link">Einstellungen</a>
-                    {% endif %}
-                </div>
-                <div class="AppFrame-footer color-bg-inset">
-                    <div class="container-lg p-3">
+                <div class="AppFrame-footer color-bg-inset border-top">
+                    <div class="p-3">
                         &copy;2023 - Benjamin Wagner
                     </div>
                 </div>

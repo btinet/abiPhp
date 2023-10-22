@@ -17,4 +17,12 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/setup', name: 'setup')]
+    public function setup(): Response
+    {
+        return $this->render('app/setup.html.twig', [
+            'local_nav' => 'settings'
+        ]);
+    }
+
 }

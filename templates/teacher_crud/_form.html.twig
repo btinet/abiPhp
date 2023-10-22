@@ -1,4 +1,27 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<h4 class="border-bottom mt-5">Persönliche Daten</h4>
+
+<div class="form-group">
+    <div class="form-group-header">
+        {{ form_label(form.firstname) }}
+    </div>
+    <div class="form-group-body">
+        {{ form_widget(form.firstname,{'attr': {'class':'form-control'} }) }}
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-group-header">
+        {{ form_label(form.lastname) }}
+    </div>
+    <div class="form-group-body">
+        {{ form_widget(form.lastname,{'attr': {'class':'form-control'} }) }}
+    </div>
+</div>
+<div class="form-group mt-5">
+    <div class="form-group-body">
+        <button class="btn btn-primary mr-2">{{ button_label|default('Speichern') }}</button>
+        <a class="btn" href="{{ path('app_teacher_crud_index') }}">Zurück zur Übersicht</a>
+    </div>
+</div>
 {{ form_end(form) }}
