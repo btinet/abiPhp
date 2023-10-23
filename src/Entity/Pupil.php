@@ -90,10 +90,13 @@ class Pupil
         return $this->examDate;
     }
 
-    public function setExamDate(\DateTimeInterface $examDate): static
+    public function setExamDate($examDate): static
     {
-        $this->examDate = $examDate;
-
+        if(is_int($examDate)) {
+            $this->examDate = date_create("$examDate-01-01");
+        } else {
+            $this->examDate = $examDate;
+        }
         return $this;
     }
 

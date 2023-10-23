@@ -8,7 +8,7 @@
     </div>
 
     <div class="SideNav">
-        <a href="#" class="SideNav-item">
+        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item">
             <i class="cil cil-user SideNav-icon"></i>
             Benutzerkonten
         </a>
@@ -16,7 +16,7 @@
             <i class="cil cil-school SideNav-icon"></i>
             Lehrkräfte
         </a>
-        <a href="#" class="SideNav-item">
+        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
             <i class="cil cil-excerpt SideNav-icon"></i>
             Punktetabellen
         </a>
@@ -30,7 +30,7 @@
             <div class="PageLayout-header">
                 <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
                     <div>
-                        <h1>Lehrkraft erstellen</h1>
+                        <h1>Neue Lehrkraft</h1>
                         <h3>Systemkonfiguration</h3>
                     </div>
                     <div class="BtnGroup d-none d-lg-block">
@@ -44,6 +44,13 @@
             <div class="PageLayout-content">
                 {{ include('teacher_crud/_form.html.twig') }}
             </div>
+        </div>
+        <div class="col-12 col-lg-5 float-left">
+            <div class="PageLayout-pane">
+            </div>
+        </div>
+        <div class="col-12 float-left">
+
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 {% extends '_admin.html.twig' %}
 
-{% block title %}Lehrkräfte - Übersicht{% endblock %}
+{% block title %}Grade index{% endblock %}
 
 {% block sidebar %}
     <div class="p-3">
@@ -12,11 +12,11 @@
             <i class="cil cil-user SideNav-icon"></i>
             Benutzerkonten
         </a>
-        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item" aria-current="true">
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
             <i class="cil cil-school SideNav-icon"></i>
             Lehrkräfte
         </a>
-        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
+        <a href="{{ url('app_grade_index') }}" class="SideNav-item" aria-current="true">
             <i class="cil cil-excerpt SideNav-icon"></i>
             Punktetabellen
         </a>
@@ -30,36 +30,35 @@
                 <div class="PageLayout-header mb-5">
                     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
                         <div>
-                            <h1>Lehrkräfte / Tutorium</h1>
+                            <h1>Punktetabellen</h1>
                             <h3>Systemkonfiguration</h3>
                         </div>
                     </div>
-                    <a href="{{ path('app_teacher_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+                    <a href="{{ path('app_grade_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
                     <table class="compact hovering" id="example">
-                        <caption class="my-3">Für Tutorien einsetzbare Lehrkräfte</caption>
+                        <caption class="my-3">Endnote und dafür notwendige Notenpunkte</caption>
                         <thead>
                         <tr>
-                            <th>Nachname</th>
-                            <th>Vorname</th>
-                            <th class="text-right">Lernende</th>
-                            <th class="text-right">Aktion</th>
+                            <th class="text-right">{{ 'Grade'|trans }}</th>
+                            <th class="text-right">{{ 'Min'|trans }}</th>
+                            <th class="text-right">{{ 'Max'|trans }}</th>
+                            <th class="text-right">{{ 'Actions'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for teacher in teachers %}
+                        {% for grade in grades %}
                             <tr>
-                                <td>{{ teacher.lastname }}</td>
-                                <td>{{ teacher.firstname }}</td>
-                                <td class="text-right">{{ teacher.pupils.count }}</td>
+                                <td class="text-right">{{ grade.grade }}</td>
+                                <td class="text-right">{{ grade.min }}</td>
+                                <td class="text-right">{{ grade.max }}</td>
                                 <td class="text-right">
-                                    <a href="{{ path('app_teacher_crud_show', {'id': teacher.id}) }}">anzeigen</a>
-                                    <a href="{{ path('app_teacher_crud_edit', {'id': teacher.id}) }}">bearbeiten</a>
-                                    {{ include('teacher_crud/_delete_form.html.twig') }}
+                                    <a href="{{ path('app_grade_show', {'id': grade.id}) }}">show</a>
+                                    <a href="{{ path('app_grade_edit', {'id': grade.id}) }}">edit</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="4">Keine Einträge vorhanden.</td>
+                                <td colspan="5">no records found</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -68,7 +67,7 @@
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    <a href="{{ path('app_teacher_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
+                    <a href="{{ path('app_grade_new') }}" class="btn btn-outline">Neuer Datensatz</a>
                 </div>
             </div>
             <div class="col-12 col-lg-5 float-left">

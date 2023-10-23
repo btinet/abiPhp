@@ -15,86 +15,86 @@
                             <a href="#" class="BtnGroup-item btn"><i class="cil-file"></i></a>
                         </div>
                     </div>
-                    <div class="Box Box--condensed Box-body Box--danger color-bg-danger mb-5">
-                        <div class="d-flex flex-justify-start flex-items-center">
-                            <i class="cil-lock-locked color-fg-danger d-block mr-2" style="font-size: 1.2rem"></i>
-                            <span class="color-fg-danger">Alle persönlichen Angaben werden verschlüsselt gespeichert und sind bei unbefugtem Zugriff unbrauchbar.</span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    <form class="mb-5" id="form" method="post" action="{{ url('app_pupil_crud_new') }}">
+                    {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
+                    <h4 class="border-bottom">Persönliche Daten</h4>
 
-                        <h4 class="border-bottom">Persönliche Daten</h4>
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.firstname) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.firstname) }}
+                            <div class="invalid-feedback color-fg-danger my-2">
+                                Bitte Vornamen des Prüflings angeben.
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="firstname">Vorname</label>
-                            </div>
-                            <div class="form-group-body">
-                                <input class="form-control width-full required" required type="text" id="firstname"/>
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.lastname) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.lastname) }}
+                            <div class="invalid-feedback color-fg-danger my-2">
+                                Bitte Nachnamen des Prüflings angeben.
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="lastname">Nachname</label>
-                            </div>
-                            <div class="form-group-body">
-                                <input class="form-control width-full" type="text" id="lastname"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="birthdate">Geburtsdatum</label>
-                            </div>
-                            <div class="form-group-body">
-                                <input class="form-control width-full" type="date" id="birthdate"/>
-                            </div>
-                        </div>
+                    </div>
 
-                        <h4 class="mt-5 border-bottom">Qualifikationsphase</h4>
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.birthDate) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.birthDate) }}
+                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="Topics">Tutorium</label>
-                            </div>
-                            <div class="form-group-body">
-                                <select class="form-select width-full" aria-label="Topics">
-                                    <option selected value="">Person wählen...</option>
-                                    {% for teacher in teachers|sort((a, b) => a.lastname <=> b.lastname) %}
-                                        <option value="{{ teacher.id }}">{{ teacher.lastname }}</option>
-                                    {% else %}
-                                        <option value="">keine Lehrkräfte vorhanden</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="exam_date">Abschlussjahr</label>
-                            </div>
-                            <div class="form-group-body">
-                                <input class="form-control width-full" type="number" min="2000" max="2099" step="1" value="{{ date('now')|date('Y') }}" id="exam_date" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group-header">
-                                <label for="exam_points">Kurspunkte</label>
-                            </div>
-                            <div class="form-group-body">
-                                <input class="form-control width-full" type="text" id="exam_points" />
-                            </div>
-                        </div>
+                    <h4 class="mt-5 border-bottom">Qualifikationsphase</h4>
 
-                        <div class="form-group mt-5">
-                            <div class="form-group-body">
-                                <button type="submit" class="btn btn-primary mr-1"  id="lastname">Speichern</button>
-                                <a href="{{ url('app_pupil_crud_index') }}"  class="btn">Abbrechen</a>
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.teacher) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.teacher) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.examDate) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.examDate) }}
+                            <div class="invalid-feedback color-fg-danger my-2">
+                                Bitte Abschlussjahr des Prüflings angeben.
                             </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            {{ form_label(form.qualificationPoints) }}
+                        </div>
+                        <div class="form-group-body">
+                            {{ form_widget(form.qualificationPoints) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-5">
+                        <div class="form-group-body">
+                            <button type="submit" class="btn btn-outline mr-1"  id="lastname">Speichern</button>
+                            <a href="{{ url('app_pupil_crud_index') }}"  class="btn">Abbrechen</a>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
                 </div>
             </div>
             <div class="col-12 col-lg-5 float-left">

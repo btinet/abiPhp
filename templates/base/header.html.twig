@@ -21,7 +21,29 @@
     </div>
     <div class="Header-item">
         {% if app.user %}
-            <a href="{{ url('app_logout') }}" class="Header-link">Logout</a>
+            <details class="dropdown details-reset
+            details-overlay d-inline-block">
+                <summary class="btn-small-mktg p-0" aria-haspopup="true">
+                    {{ app.user }}
+                    <div class="dropdown-caret"></div>
+                </summary>
+                <ul class="dropdown-menu dropdown-menu-sw" style="z-index: 1100">
+                    <li><a class="dropdown-item" href="#">Einstellungen</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ url('app_setup') }}" {{ local_nav == 'settings' ? 'aria-current="true"' : '' }} class="dropdown-item">
+                                Administration
+                            </a>
+                        </li>
+
+                    {% endif %}
+                    <li class="dropdown-divider" role="separator"></li>
+                    <li><a class="dropdown-item" href="{{ url('app_logout') }}">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </details>
             {% else %}
                 <a href="{{ url('app_login') }}" class="Header-link">Login</a>
         {% endif %}

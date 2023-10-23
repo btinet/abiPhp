@@ -1,6 +1,6 @@
 {% extends '_admin.html.twig' %}
 
-{% block title %}Lehrkraft bearbeiten{% endblock %}
+{% block title %}New Grade{% endblock %}
 
 {% block sidebar %}
     <div class="p-3">
@@ -12,11 +12,11 @@
             <i class="cil cil-user SideNav-icon"></i>
             Benutzerkonten
         </a>
-        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item" aria-current="true">
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
             <i class="cil cil-school SideNav-icon"></i>
             Lehrkräfte
         </a>
-        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
+        <a href="{{ url('app_grade_index') }}" class="SideNav-item" aria-current="true">
             <i class="cil cil-excerpt SideNav-icon"></i>
             Punktetabellen
         </a>
@@ -30,7 +30,7 @@
                 <div class="PageLayout-header">
                     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
                         <div>
-                            <h1>{{ teacher }} bearbeiten</h1>
+                            <h1>Neuer Schulnoteneintrag</h1>
                             <h3>Systemkonfiguration</h3>
                         </div>
                         <div class="BtnGroup d-none d-lg-block">
@@ -42,7 +42,7 @@
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    {{ include('teacher_crud/_form.html.twig', {'button_label': 'Aktualisieren'}) }}
+                    {{ include('grade/_form.html.twig') }}
                 </div>
             </div>
             <div class="col-12 col-lg-5 float-left">

@@ -12,7 +12,11 @@
                 <a class="UnderlineNav-item"><i class="cil-cloud-download mr-1"></i>Export</a>
             </div>
             <div class="UnderlineNav-actions">
-                <a href="{{ url('app_setup') }}" class="UnderlineNav-item"{{ local_nav == 'settings' ? 'aria-current="true"' : '' }}><i class="cil-settings mr-1"></i>Einstellungen</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ url('app_setup') }}" {{ local_nav == 'settings' ? 'aria-current="true"' : '' }} class="UnderlineNav-item">
+                            <i class="cil-settings mr-1"></i>Administration
+                        </a>
+                    {% endif %}
             </div>
         </div>
     </nav>

@@ -11,7 +11,8 @@
                             <h3>Datensätze auflisten</h3>
                         </div>
                     </div>
-                    <table class="compact hover" id="example">
+                    <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+                    <table class="compact hovering" id="example">
                         <caption>Prüflinge</caption>
                         <thead class="border-top">
                         <tr class="border-bottom">
@@ -25,25 +26,27 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for pupil in pupils %}
                         <tr class="border-bottom">
-                            <td class="TableObject-item">Wagner</td>
-                            <td class="TableObject-item">Benjamin</td>
-                            <td class="TableObject-item text-right">16.02.1987</td>
-                            <td class="TableObject-item text-right">2024</td>
-                            <td class="TableObject-item">Kottwitz</td>
-                            <td class="TableObject-item text-right">412</td>
+                            <th class="TableObject-item text-left">{{ pupil.lastname }}</th>
+                            <td class="TableObject-item">{{ pupil.firstname }}</td>
+                            <td class="TableObject-item text-right">{{ pupil.birthDate|date('Y-m-d')|default('') }}</td>
+                            <td class="TableObject-item text-right">{{ pupil.examDate|date('Y') }}</td>
+                            <td class="TableObject-item">{{ pupil.teacher|default('') }}</td>
+                            <td class="TableObject-item text-right">{{ pupil.qualificationPoints|default('') }}</td>
                             <td class="TableObject-item text-right">
                                     <a href="#" class="">anzeigen</a>
                                     <a href="#" class="">bearbeiten</a>
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-primary">Neuer Datensatz</a>
+                    <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
                 </div>
             </div>
             <div class="col-12 col-lg-5 float-left">

@@ -1,0 +1,95 @@
+{% extends '_admin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block sidebar %}
+    <div class="p-3">
+        <h4>Entitäten</h4>
+    </div>
+
+    <div class="SideNav">
+        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item" aria-current="true">
+            <i class="cil cil-user SideNav-icon"></i>
+            Benutzerkonten
+        </a>
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
+            <i class="cil cil-school SideNav-icon"></i>
+            Lehrkräfte
+        </a>
+        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
+            <i class="cil cil-excerpt SideNav-icon"></i>
+            Punktetabellen
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="PageLayout">
+        <div class="clearfix gutter">
+            <div class="col-12 float-left">
+                <div class="PageLayout-header mb-5">
+                    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+                        <div>
+                            <h1>Benutzerkonten</h1>
+                            <h3>Systemkonfiguration</h3>
+                        </div>
+                    </div>
+                    <a href="{{ path('app_user_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+                    <table class="compact hovering" id="example">
+                        <caption class="my-3">Benutzerkonten</caption>
+                        <thead>
+                        <tr>
+                            <th>{{ 'Lastname'|trans }}</th>
+                            <th>{{ 'Firstname'|trans }}</th>
+                            <th>{{ 'Username'|trans }}</th>
+                            <th>{{ 'Roles'|trans }}</th>
+                            <th>{{ 'Email'|trans }}</th>
+                            <th class="text-right">{{ 'Actions'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.lastname }}</td>
+                                <td>{{ user.firstname }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>
+                                    {% for role in user.roles %}
+                                        <span class="rounded color-bg-open color-fg-open text-small px-2 py-1">{{ role|trans }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ user.email }}</td>
+                                <td class="text-right">
+                                    <a class="mr-2" href="{{ path('app_user_crud_edit', {'id': user.id}) }}">bearbeiten</a>
+                                    <a class="mr-2" href="{{ path('app_user_crud_edit_password', {'id': user.id}) }}">Passwort ändern</a>
+                                    {% if app.user is not same as user %}
+                                        {{ include('user_crud/_delete_form.html.twig') }}
+                                        {% else %}
+                                            <span class="color-fg-muted">löschen</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7 float-left">
+                <div class="PageLayout-content">
+                    <a href="{{ path('app_user_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 float-left">
+                <div class="PageLayout-pane">
+
+                </div>
+            </div>
+            <div class="col-12 float-left">
+            </div>
+        </div>
+    </div>
+{% endblock %}

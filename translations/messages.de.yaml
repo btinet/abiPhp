@@ -1,2 +1,16 @@
 Firstname: Vorname
 Lastname: Nachname
+Email: E-Mail-Adresse
+Username: Kennung
+Password: Passwort
+ROLE_USER: Benutzer
+ROLE_ADMIN: Administrator
+Roles: Rollen
+Actions: Aktion
+Grade: Schulnote
+Min: Mindestpunktzahl
+Max: Maximalpunktzahl
+Birth date: Geburtsdatum
+Exam date: Abschlussjahr
+Teacher: Tutorium
+Qualification points: Punktzahl des Kursblocks
