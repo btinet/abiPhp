@@ -1,57 +1,20 @@
-{% extends '_admin.html.twig' %}
+{% extends '_setup.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
 
-{% block sidebar %}
-    <div class="p-3">
-        <h4>Entitäten</h4>
-    </div>
-
-    <div class="SideNav">
-        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item" aria-current="true">
-            <i class="cil cil-user SideNav-icon"></i>
-            Benutzerkonten
-        </a>
-        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
-            <i class="cil cil-school SideNav-icon"></i>
-            Lehrkräfte
-        </a>
-        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
-            <i class="cil cil-excerpt SideNav-icon"></i>
-            Punktetabellen
-        </a>
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>{{ user }} bearbeiten</h1>
+            <h3 class="color-fg-accent">Systemkonfiguration</h3>
+        </div>
     </div>
 {% endblock %}
 
-{% block body %}
-    <div class="PageLayout">
-        <div class="clearfix gutter">
-            <div class="col-12 float-left">
-                <div class="PageLayout-header mb-5">
-                    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
-                        <div>
-                            <h1>{{ user }} bearbeiten</h1>
-                            <h3>Systemkonfiguration</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-7 float-left">
-                <div class="PageLayout-content">
-                    <p>Wollen Sie stattdessen das <a class="" href="{{ path('app_user_crud_edit_password', {'id': user.id}) }}">Passwort ändern</a>?</p>
-                    {% if app.user is same as user %}
-                        {{ include('base/alert.html.twig',{'text':'Dies ist Ihr Benutzerkonto. Nach Speichern der Änderungen werden Sie ggf. automatisch ausgeloggt.'}) }}
-                    {% endif %}
-                    {{ include('user_crud/_form.html.twig', {'button_label': 'Aktualisieren'}) }}
-                </div>
-            </div>
-            <div class="col-12 col-lg-5 float-left">
-                <div class="PageLayout-pane">
-
-                </div>
-            </div>
-            <div class="col-12 float-left">
-            </div>
-        </div>
-    </div>
+{% block page_content %}
+    <p>Wollen Sie stattdessen das <a class="" href="{{ path('app_user_crud_edit_password', {'id': user.id}) }}">Passwort ändern</a>?</p>
+    {% if app.user is same as user %}
+        {{ include('base/alert.html.twig',{'text':'Dies ist Ihr Benutzerkonto. Nach Speichern der Änderungen werden Sie ggf. automatisch ausgeloggt.'}) }}
+    {% endif %}
+    {{ include('user_crud/_form.html.twig', {'button_label': 'Aktualisieren'}) }}
 {% endblock %}

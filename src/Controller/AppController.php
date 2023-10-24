@@ -21,7 +21,8 @@ class AppController extends AbstractController
     public function setup(): Response
     {
         return $this->render('app/setup.html.twig', [
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => '',
         ]);
     }
 

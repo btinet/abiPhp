@@ -19,7 +19,8 @@ class GradeController extends AbstractController
     {
         return $this->render('grade/index.html.twig', [
             'grades' => $gradeRepository->findAll(),
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'grade',
         ]);
     }
 
@@ -40,7 +41,8 @@ class GradeController extends AbstractController
         return $this->render('grade/new.html.twig', [
             'grade' => $grade,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'grade',
         ]);
     }
 
@@ -49,7 +51,8 @@ class GradeController extends AbstractController
     {
         return $this->render('grade/show.html.twig', [
             'grade' => $grade,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'grade',
         ]);
     }
 
@@ -68,7 +71,8 @@ class GradeController extends AbstractController
         return $this->render('grade/edit.html.twig', [
             'grade' => $grade,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'grade',
         ]);
     }
 

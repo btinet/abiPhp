@@ -1,57 +1,20 @@
-{% extends '_admin.html.twig' %}
+{% extends '_setup.html.twig' %}
 
 {% block title %}New Teacher{% endblock %}
 
-{% block sidebar %}
-    <div class="p-3">
-        <h4>Entitäten</h4>
-    </div>
-
-    <div class="SideNav">
-        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item">
-            <i class="cil cil-user SideNav-icon"></i>
-            Benutzerkonten
-        </a>
-        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item" aria-current="true">
-            <i class="cil cil-school SideNav-icon"></i>
-            Lehrkräfte
-        </a>
-        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
-            <i class="cil cil-excerpt SideNav-icon"></i>
-            Punktetabellen
-        </a>
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>Neue Lehrkraft</h1>
+            <h3 class="color-fg-accent">Systemkonfiguration</h3>
+        </div>
+        <div class="BtnGroup d-none d-lg-block">
+            <a href="#" class="BtnGroup-item btn"><i class="cil-print"></i></a>
+            <a href="#" class="BtnGroup-item btn"><i class="cil-file"></i></a>
+        </div>
     </div>
 {% endblock %}
 
-{% block body %}
-<div class="PageLayout">
-    <div class="clearfix gutter">
-        <div class="col-12 float-left">
-            <div class="PageLayout-header">
-                <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
-                    <div>
-                        <h1>Neue Lehrkraft</h1>
-                        <h3>Systemkonfiguration</h3>
-                    </div>
-                    <div class="BtnGroup d-none d-lg-block">
-                        <a href="#" class="BtnGroup-item btn"><i class="cil-print"></i></a>
-                        <a href="#" class="BtnGroup-item btn"><i class="cil-file"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-7 float-left">
-            <div class="PageLayout-content">
-                {{ include('teacher_crud/_form.html.twig') }}
-            </div>
-        </div>
-        <div class="col-12 col-lg-5 float-left">
-            <div class="PageLayout-pane">
-            </div>
-        </div>
-        <div class="col-12 float-left">
-
-        </div>
-    </div>
-</div>
+{% block page_content %}
+    {{ include('teacher_crud/_form.html.twig') }}
 {% endblock %}

@@ -21,7 +21,8 @@ class UserCrudController extends AbstractController
     {
         return $this->render('user_crud/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'user',
         ]);
     }
 
@@ -42,7 +43,8 @@ class UserCrudController extends AbstractController
         return $this->render('user_crud/new.html.twig', [
             'user' => $user,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'user',
         ]);
     }
 
@@ -51,7 +53,8 @@ class UserCrudController extends AbstractController
     {
         return $this->render('user_crud/show.html.twig', [
             'user' => $user,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'user',
         ]);
     }
 
@@ -70,7 +73,8 @@ class UserCrudController extends AbstractController
         return $this->render('user_crud/edit.html.twig', [
             'user' => $user,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'user',
         ]);
     }
 
@@ -89,7 +93,8 @@ class UserCrudController extends AbstractController
         return $this->render('user_crud/edit_password.html.twig', [
             'user' => $user,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'user',
         ]);
     }
 

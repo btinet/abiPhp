@@ -1,0 +1,14 @@
+<div class="BtnGroup-item">
+    <a class="BtnGroup-item btn btn-sm color-fg-sponsors" href="{{ path('app_user_crud_edit', {'id': user.id}) }}"><i class="bi bi-pencil"></i></a>
+    <a class="BtnGroup-item btn btn-sm color-fg-attention" href="{{ path('app_user_crud_edit_password', {'id': user.id}) }}"><i class="bi bi-key"></i></a>
+    {% if app.user is not same as user %}
+        <button form="form" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="bi bi-trash"></i></button>
+    {% else %}
+        <button disabled form="form" class="BtnGroup-item btn btn-sm color-fg-muted"><i class="bi bi-trash"></i></button>
+    {% endif %}
+
+</div>
+
+<form id="form" method="post" class="d-inline-block" action="{{ path('app_user_crud_delete', {'id': user.id}) }}" onsubmit="return confirm('Möchten Sie wirklich diesen Eintrag löschen?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+</form>

@@ -1,29 +1,8 @@
-{% extends '_admin.html.twig' %}
+{% extends '_setup.html.twig' %}
 
 {% block title %}User{% endblock %}
 
-{% block sidebar %}
-    <div class="p-3">
-        <h4>Entitäten</h4>
-    </div>
-
-    <div class="SideNav">
-        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item" aria-current="true">
-            <i class="cil cil-user SideNav-icon"></i>
-            Benutzerkonten
-        </a>
-        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
-            <i class="cil cil-school SideNav-icon"></i>
-            Lehrkräfte
-        </a>
-        <a href="{{ url('app_grade_index') }}" class="SideNav-item">
-            <i class="cil cil-excerpt SideNav-icon"></i>
-            Punktetabellen
-        </a>
-    </div>
-{% endblock %}
-
-{% block body %}
+{% block page_content %}
     <h1>User</h1>
 
     <table class="table">
@@ -63,5 +42,5 @@
 
     <a href="{{ path('app_user_crud_edit', {'id': user.id}) }}">edit</a>
 
-    {{ include('user_crud/_delete_form.html.twig') }}
+    {{ include('user_crud/_action_form.html.twig') }}
 {% endblock %}

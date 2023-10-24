@@ -8,12 +8,12 @@
                     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
                         <div>
                             <h1>Personenverzeichnis</h1>
-                            <h3>Datensätze auflisten</h3>
+                            <h3 class="color-fg-accent">Datensätze auflisten</h3>
                         </div>
+                        <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
                     </div>
-                    <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+
                     <table class="compact hovering" id="example">
-                        <caption>Prüflinge</caption>
                         <thead class="border-top">
                         <tr class="border-bottom">
                             <th class="TableObject-item text-left">Name</th>

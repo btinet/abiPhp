@@ -1,0 +1,69 @@
+{% extends '_admin.html.twig' %}
+
+{% block sidebar %}
+    <div class="p-3">
+        <h4>Benutzereinstellungen</h4>
+    </div>
+    <div class="SideNav mb-3">
+        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item">
+            <i class="bi bi-person-check SideNav-icon"></i>
+            Persönliche Angaben
+        </a>
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
+            <i class="cil cil-envelope-letter SideNav-icon"></i>
+            Kommunikation
+        </a>
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item">
+            <i class="bi bi-key SideNav-icon"></i>
+            Sicherheit
+        </a>
+    </div>
+
+    <div class="p-3">
+        <h4>Systemkonfiguration</h4>
+    </div>
+    <div class="SideNav mb-3">
+        <a href="{{ url('app_user_crud_index') }}" class="SideNav-item" {{ side_nav == 'user' ? 'aria-current="true"' : '' }}>
+            <i class="cil cil-user SideNav-icon"></i>
+            Benutzerkonten
+        </a>
+        <a href="{{ url('app_teacher_crud_index') }}" class="SideNav-item" {{ side_nav == 'teacher' ? 'aria-current="true"' : '' }}>
+            <i class="cil cil-school SideNav-icon"></i>
+            Lehrkräfte
+        </a>
+        <a href="{{ url('app_exam_subject_crud_index') }}" class="SideNav-item" {{ side_nav == 'exam_subject' ? 'aria-current="true"' : '' }}>
+            <i class="cil cil-notes SideNav-icon"></i>
+            Prüfungsfächer
+        </a>
+        <a href="{{ url('app_grade_index') }}" class="SideNav-item" {{ side_nav == 'grade' ? 'aria-current="true"' : '' }}>
+            <i class="cil cil-excerpt SideNav-icon"></i>
+            Punktetabellen
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+    <div class="PageLayout">
+        <div class="clearfix gutter">
+            <div class="col-12 float-left">
+                <div class="PageLayout-header mb-5">
+                    {% block page_header %}{% endblock %}
+                </div>
+            </div>
+            <div class="col-12 col-lg-7 float-left">
+                <div class="PageLayout-content">
+                    {% block page_content %}{% endblock %}
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 float-left">
+                <div class="PageLayout-pane">
+                    {% block page_pane %}{% endblock %}
+                </div>
+            </div>
+            <div class="col-12 float-left">
+                {% block page_footer %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

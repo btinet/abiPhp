@@ -1,0 +1,41 @@
+{% extends '_setup.html.twig' %}
+
+{% block title %}ExamSubject index{% endblock %}
+
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>Prüfungsfächer</h1>
+            <h3 class="color-fg-accent">Systemkonfiguration</h3>
+        </div>
+        <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+    </div>
+    <table class="compact hovering" id="example">
+        <thead>
+        <tr>
+            <th>{{ 'Label'|trans }}</th>
+            <th>{{ 'Abbreviation'|trans }}</th>
+            <th class="text-right">{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for exam_subject in exam_subjects %}
+            <tr>
+                <th scope="row" class="text-left">{{ exam_subject.label }}</th>
+                <td>{{ exam_subject.abbreviation }}</td>
+                <td class="d-flex flex-justify-end">
+                    {{ include('exam_subject_crud/_action_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block page_content %}
+    <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
+{% endblock %}

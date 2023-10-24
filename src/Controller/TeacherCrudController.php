@@ -19,7 +19,8 @@ class TeacherCrudController extends AbstractController
     {
         return $this->render('teacher_crud/index.html.twig', [
             'teachers' => $teacherRepository->findAll(),
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'teacher',
         ]);
     }
 
@@ -40,7 +41,8 @@ class TeacherCrudController extends AbstractController
         return $this->render('teacher_crud/new.html.twig', [
             'teacher' => $teacher,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'teacher',
         ]);
     }
 
@@ -49,7 +51,8 @@ class TeacherCrudController extends AbstractController
     {
         return $this->render('teacher_crud/show.html.twig', [
             'teacher' => $teacher,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'teacher',
         ]);
     }
 
@@ -68,7 +71,8 @@ class TeacherCrudController extends AbstractController
         return $this->render('teacher_crud/edit.html.twig', [
             'teacher' => $teacher,
             'form' => $form,
-            'local_nav' => 'settings'
+            'local_nav' => 'settings',
+            'side_nav' => 'teacher',
         ]);
     }
 

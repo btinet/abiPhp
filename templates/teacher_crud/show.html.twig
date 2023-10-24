@@ -1,8 +1,8 @@
-{% extends '_admin.html.twig' %}
+{% extends '_setup.html.twig' %}
 
 {% block title %}Teacher{% endblock %}
 
-{% block body %}
+{% block page_header %}
     <h1>Teacher</h1>
 
     <table class="table">
@@ -26,5 +26,5 @@
 
     <a href="{{ path('app_teacher_crud_edit', {'id': teacher.id}) }}">edit</a>
 
-    {{ include('teacher_crud/_delete_form.html.twig') }}
+    {{ include('teacher_crud/_action_form.html.twig') }}
 {% endblock %}

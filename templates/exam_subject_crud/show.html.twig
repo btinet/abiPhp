@@ -1,0 +1,37 @@
+{% extends '_setup.html.twig' %}
+
+{% block title %}ExamSubject{% endblock %}
+
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>{{ exam_subject }} anzeigen</h1>
+            <h3 class="color-fg-accent">Systemkonfiguration</h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ exam_subject.id }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ exam_subject.label }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation</th>
+                <td>{{ exam_subject.abbreviation }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_exam_subject_crud_index') }}">back to list</a>
+
+    <a href="{{ path('app_exam_subject_crud_edit', {'id': exam_subject.id}) }}">edit</a>
+
+    {{ include('exam_subject_crud/_action_form.html.twig') }}
+{% endblock %}

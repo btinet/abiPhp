@@ -1,16 +1,16 @@
 {% extends '_setup.html.twig' %}
 
-{% block title %}Neues Benutzerkonto{% endblock %}
+{% block title %}Edit ExamSubject{% endblock %}
 
 {% block page_header %}
     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
         <div>
-            <h1>Neues Benutzerkonto</h1>
+            <h1>{{ exam_subject }} bearbeiten</h1>
             <h3 class="color-fg-accent">Systemkonfiguration</h3>
         </div>
     </div>
 {% endblock %}
 
 {% block page_content %}
-    {{ include('user_crud/_form_new.html.twig') }}
+    {{ include('exam_subject_crud/_form.html.twig', {'button_label': 'Aktualisieren'}) }}
 {% endblock %}
