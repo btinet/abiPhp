@@ -7,7 +7,7 @@ ROLE_USER: Benutzer
 ROLE_ADMIN: Administrator
 Roles: Rollen
 Actions: Aktion
-Grade: Schulnote
+Grade: Zeugnisnote
 Min: Mindestpunktzahl
 Max: Maximalpunktzahl
 Birth date: Geburtsdatum
