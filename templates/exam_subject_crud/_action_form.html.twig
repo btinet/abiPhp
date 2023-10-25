@@ -1,6 +1,6 @@
 <div class="BtnGroup-item">
-    <a class="BtnGroup-item btn btn-sm color-fg-sponsors" href="{{ path('app_exam_subject_crud_edit', {'id': exam_subject.id}) }}"><i class="bi bi-pencil"></i></a>
-    <button form="form" type="submit" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="bi bi-trash"></i></button>
+    <a class="BtnGroup-item btn btn-sm" href="{{ path('app_exam_subject_crud_edit', {'id': exam_subject.id}) }}"><i class="icon_pencil-edit"></i></a>
+    <button form="form" type="submit" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="icon_trash_alt"></i></button>
 </div>
 
 <form id="form" method="post" action="{{ path('app_exam_subject_crud_delete', {'id': exam_subject.id}) }}" onsubmit="return confirm('Möchten Sie diesen Eintrag wirklich löschen?');">

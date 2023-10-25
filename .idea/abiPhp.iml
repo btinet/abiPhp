@@ -140,5 +140,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="dataTables.select" level="application" />
+    <orderEntry type="library" name="select.dataTables" level="application" />
   </component>
 </module>

@@ -10,33 +10,44 @@
                             <h1>Personenverzeichnis</h1>
                             <h3 class="color-fg-accent">Datensätze auflisten</h3>
                         </div>
-                        <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+                        <a href="{{ path('app_pupil_crud_new') }}" class="btn btn-outline">
+                            <div class=" d-flex flex-items-center">
+                                <i class="icon_pencil-edit mr-2"></i> Neuer Datensatz
+                            </div>
+                        </a>
                     </div>
 
                     <table class="compact hovering" id="example">
                         <thead class="border-top">
                         <tr class="border-bottom">
-                            <th class="TableObject-item text-left">Name</th>
-                            <th class="TableObject-item text-left">Vorname</th>
-                            <th class="TableObject-item text-right">Geburtsdatum</th>
-                            <th class="TableObject-item text-right">Abschlussjahr</th>
-                            <th class="TableObject-item text-left">Tutorium</th>
-                            <th class="TableObject-item text-right">Kursblock</th>
-                            <th class="TableObject-item text-right">Aktion</th>
+                            <th class=" text-left">Name</th>
+                            <th class=" text-left">Vorname</th>
+                            <th class=" text-right">Geburtsdatum</th>
+                            <th class=" text-right">Abschlussjahr</th>
+                            <th class=" text-left">Tutorium</th>
+                            <th class=" text-right">Kursblock</th>
+                            <th class=" text-right">Aktion</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for pupil in pupils %}
                         <tr class="border-bottom">
-                            <th class="TableObject-item text-left">{{ pupil.lastname }}</th>
-                            <td class="TableObject-item">{{ pupil.firstname }}</td>
-                            <td class="TableObject-item text-right">{{ pupil.birthDate|date('Y-m-d')|default('') }}</td>
-                            <td class="TableObject-item text-right">{{ pupil.examDate|date('Y') }}</td>
-                            <td class="TableObject-item">{{ pupil.teacher|default('') }}</td>
-                            <td class="TableObject-item text-right">{{ pupil.qualificationPoints|default('') }}</td>
-                            <td class="TableObject-item text-right">
-                                    <a href="#" class="">anzeigen</a>
-                                    <a href="#" class="">bearbeiten</a>
+                            <th class=" text-left">
+                                <a class="color-fg-default" href="{{ path('app_pupil_crud_show', {'id': pupil.id}) }}">
+                                    {{ pupil.lastname }}
+                                </a>
+                            </th>
+                            <td class="">{{ pupil.firstname }}</td>
+                            <td class=" text-right">{{ pupil.birthDate|date('Y-m-d')|default('') }}</td>
+                            <td class="text-right">{{ pupil.examDate|date('Y') }}</td>
+                            <td class="">{{ pupil.teacher|default('') }}</td>
+                            <td class="text-right">{{ pupil.qualificationPoints|default('') }}</td>
+                            <td class="d-flex flex-justify-end">
+                                <div class="BtnGroup-item">
+                                    <a class="BtnGroup-item btn btn-sm" href="{{ path('app_pupil_crud_show', {'id': pupil.id}) }}"><i class="icon_folder-open_alt"></i></a>
+                                    <a class="BtnGroup-item btn btn-sm" href="{{ path('app_pupil_crud_edit', {'id': pupil.id}) }}"><i class="icon_pencil-edit"></i></a>
+                                    <button form="form" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="icon_trash_alt"></i></button>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -46,7 +57,11 @@
             </div>
             <div class="col-12 col-lg-7 float-left">
                 <div class="PageLayout-content">
-                    <a href="{{ url('app_pupil_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
+                    <a href="{{ path('app_pupil_crud_new') }}" class="btn btn-outline">
+                        <div class=" d-flex flex-items-center">
+                            <i class="icon_pencil-edit mr-2"></i> Neuer Datensatz
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-12 col-lg-5 float-left">

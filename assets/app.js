@@ -15,7 +15,19 @@ import './styles/app.scss';
 
 
 let table = new DataTable('#example', {
-    responsive: true
+    responsive: true,
+});
+
+let table2 = new DataTable('#simple', {
+    responsive: true,
+    paging: false,
+    searching: false,
+});
+
+let resultsTable = new DataTable('#results', {
+    responsive: true,
+    paging: false,
+    searching: false,
 });
 
 registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));

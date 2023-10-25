@@ -8,7 +8,11 @@
             <h1>Prüfungsfächer</h1>
             <h3 class="color-fg-accent">Systemkonfiguration</h3>
         </div>
-        <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline mb-5">Neuer Datensatz</a>
+        <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline">
+            <div class=" d-flex flex-items-center">
+                <i class="icon_pencil-edit mr-2"></i> Neuer Datensatz
+            </div>
+        </a>
     </div>
     <table class="compact hovering" id="example">
         <thead>
@@ -37,5 +41,9 @@
 {% endblock %}
 
 {% block page_content %}
-    <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline">Neuer Datensatz</a>
+    <a href="{{ path('app_exam_subject_crud_new') }}" class="btn btn-outline">
+        <div class=" d-flex flex-items-center">
+            <i class="icon_pencil-edit mr-2"></i> Neuer Datensatz
+        </div>
+    </a>
 {% endblock %}

@@ -39,8 +39,40 @@ class PupilCrudController extends AbstractController
         }
 
         return $this->render('pupil_crud/new.html.twig', [
+            'pupil' => $pupil,
             'form' => $form,
             'local_nav' => 'pupil'
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Pupil $pupil, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PupilType::class,$pupil);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($pupil);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_pupil_crud_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('pupil_crud/edit.html.twig', [
+            'pupil' => $pupil,
+            'form' => $form,
+            'local_nav' => 'pupil',
+            'side_nav' => 'overview',
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(Pupil $pupil): Response
+    {
+        return $this->render('pupil_crud/show.html.twig', [
+            'pupil' => $pupil,
+            'local_nav' => 'pupil',
+            'side_nav' => 'overview',
         ]);
     }
 }

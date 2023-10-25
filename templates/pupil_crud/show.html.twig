@@ -1,0 +1,147 @@
+{% extends '_setup.html.twig' %}
+
+{% block sidebar %}
+
+    <div class="p-3">
+        <h4>Schnellzugriff</h4>
+    </div>
+    <div class="SideNav mb-3">
+        <a href="{{ url('app_pupil_crud_index') }}" class="SideNav-item">
+            <i class="cil cil-group SideNav-icon"></i>
+            Alle Prüflinge
+        </a>
+        <a href="#" class="SideNav-item">
+            <i class="cil cil-cloud-download SideNav-icon"></i>
+            Datenblatt exportieren
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block page_header %}
+<div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+    <div>
+        <h1>{{ pupil }}</h1>
+        <h2 class="h3 color-fg-accent">Abitur- und Zusatzprüfungen</h2>
+    </div>
+    <span class="text-muted h4">{{ pupil.teacher }}</span>
+</div>
+{% endblock %}
+
+{% block page_content %}
+    <div class="mb-5">
+        <a href="{{ path('app_pupil_crud_new') }}" class="btn btn-outline">
+            <div class=" d-flex flex-items-center">
+                <i class="icon_pencil-edit mr-2"></i>Neue Prüfung
+            </div>
+        </a>
+        <a href="{{ path('app_pupil_crud_index') }}" class="btn">
+            <div class=" d-flex flex-items-center">
+                <i class="bi bi-chevron-double-left mr-2"></i>Zurück zur Übersicht
+            </div>
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block page_footer %}
+
+
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+        <div>
+            <h3 class="h3">Punkte aus Qualifikationsphase</h3>
+        </div>
+        <span class="h3 color-fg-accent">{{ pupil.qualificationPoints }}</span>
+    </div>
+
+    <h3 class="h4 mb-3">Abgelegte Abiturprüfungen</h3>
+    <div class="mb-3">
+        <table class="compact hovering" id="simple">
+            <thead>
+            <tr>
+                <th>Prüfung</th>
+                <th>Fach</th>
+                <th class="text-right">Notenpunkte (einfach)</th>
+                <th class="text-right">Notenpunkte (vierfach)</th>
+                <th class="text-right">{{ 'Actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for exam in pupil.exams %}
+                <tr>
+                    <th class="text-left">{{ exam.examNumber }}</th>
+                    <td>{{ exam.subject }}</td>
+                    <td class="text-right">{{ exam.examPoints }}</td>
+                    <td class="text-right">{{ exam.examPoints * 4 }}</td>
+                    <td class="d-flex flex-justify-end"></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+        <div>
+            <h3 class="h3">Punkte aus Prüfungsblock</h3>
+        </div>
+        <span class="h3 color-fg-accent">116</span>
+    </div>
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap border-bottom">
+        <div>
+            <h3 class="h3">Gesamt</h3>
+        </div>
+        <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + 116 }}</span>
+    </div>
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+        <div>
+            <h3 class="h3">Endnote</h3>
+        </div>
+        <span class="h1 color-fg-accent">2,4</span>
+    </div>
+
+    <h3 class="h4 mb-3">Mögliche Zusatzprüfungen</h3>
+    <div class="mb-3">
+        <table class="compact hovering" id="results">
+            <thead>
+            <tr>
+                <th>Prüfung</th>
+                <th>Fach</th>
+                <th class="text-right">Notwendig (einfach)</th>
+                <th class="text-right">Notwendig (vierfach)</th>
+                <th class="text-right">Kritisch</th>
+                <th class="text-right">{{ 'Actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="text-left">1</th>
+                <td>Kunst</td>
+                <td class="text-right">15</td>
+                <td class="text-right">60</td>
+                <td class="text-right"><span class="rounded color-bg-open color-fg-open text-small px-2 py-1">kein Risiko</span></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap border-bottom">
+        <div>
+            <h3 class="h3">Gesamt nach Zusatzprüfung</h3>
+        </div>
+        <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + 128 }}</span>
+    </div>
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+        <div>
+            <h3 class="h3">Neue Endnote</h3>
+        </div>
+        <span class="h1 color-fg-accent">2,3</span>
+    </div>
+{% endblock %}

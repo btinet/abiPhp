@@ -1,0 +1,45 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<desc>vpn_key icon - Licensed under Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0) - Created with Iconfu.com - Derivative work of Material icons (Copyright Google Inc.)</desc>
+	<defs>
+		<clipPath id="clip-Vz8ojsrS">
+			<path d="M821.76,455.68v112.64h-56.32v112.64h-112.64v-112.64h-122.5c-23.09,65.61 -85.6,112.64 -159.1,112.64c-93.21,0 -168.96,-75.75 -168.96,-168.96c0,-93.21 75.75,-168.96 168.96,-168.96c73.5,0 136.01,47.03 159.1,112.64zM427.52,512c0,-30.97 -25.34,-56.32 -56.32,-56.32c-30.97,0 -56.32,25.34 -56.32,56.32c0,30.97 25.35,56.32 56.32,56.32c30.97,0 56.32,-25.34 56.32,-56.32z" fill="none"/>
+		</clipPath>
+		<linearGradient x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse" id="color-krGyjPBM">
+			<stop offset="0" stop-color="#0969da"/>
+			<stop offset="1" stop-color="#004fc1"/>
+		</linearGradient>
+		<filter id="filter-8G56Au5j" x="-9%" y="-7%" width="140%" height="199%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.13 0" in="SourceGraphic"/>
+			<feOffset dy="13.33"/>
+			<feGaussianBlur stdDeviation="7.33" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="13.33" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-BRYnKoGw" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.13 0" in="SourceGraphic"/>
+			<feOffset dy="13.33"/>
+			<feGaussianBlur stdDeviation="7.33" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="13.33" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<path d="M922.19,1024h-820.38c-56.23,0 -101.81,-45.58 -101.81,-101.81v-820.38c0,-56.23 45.58,-101.81 101.81,-101.81h820.38c56.23,0 101.81,45.58 101.81,101.81v820.38c0,56.23 -45.58,101.81 -101.81,101.81z" fill="url(#color-krGyjPBM)"/>
+		<path d="M867.84,455.68v112.64c0,25.45 -20.63,46.08 -46.08,46.08h-10.24v66.56c0,25.45 -20.63,46.08 -46.08,46.08h-112.64c-25.45,0 -46.08,-20.63 -46.08,-46.08v-66.56h-46.6c-36.28,67.02 -107.22,112.64 -188.92,112.64c-118.66,0 -215.04,-96.38 -215.04,-215.04c0,-118.66 96.38,-215.04 215.04,-215.04c81.7,0 152.63,45.62 188.92,112.64h261.64c25.45,0 46.08,20.63 46.08,46.08zM381.44,512c0,-5.52 -4.71,-10.24 -10.24,-10.24c-5.53,0 -10.24,4.72 -10.24,10.24c0,5.52 4.71,10.24 10.24,10.24c5.52,0 10.24,-4.71 10.24,-10.24z" filter="url(#filter-8G56Au5j)" fill="#000000"/>
+		<path d="M867.84,455.68v112.64c0,25.45 -20.63,46.08 -46.08,46.08h-10.24v66.56c0,25.45 -20.63,46.08 -46.08,46.08h-112.64c-25.45,0 -46.08,-20.63 -46.08,-46.08v-66.56h-46.6c-36.28,67.02 -107.22,112.64 -188.92,112.64c-118.66,0 -215.04,-96.38 -215.04,-215.04c0,-118.66 96.38,-215.04 215.04,-215.04c81.7,0 152.63,45.62 188.92,112.64h261.64c25.45,0 46.08,20.63 46.08,46.08zM381.44,512c0,-5.52 -4.71,-10.24 -10.24,-10.24c-5.53,0 -10.24,4.72 -10.24,10.24c0,5.52 4.71,10.24 10.24,10.24c5.52,0 10.24,-4.71 10.24,-10.24z" fill="#ffffff"/>
+		<path d="M821.76,455.68v112.64h-56.32v112.64h-112.64v-112.64h-122.5c-23.09,65.61 -85.6,112.64 -159.1,112.64c-93.21,0 -168.96,-75.75 -168.96,-168.96c0,-93.21 75.75,-168.96 168.96,-168.96c73.5,0 136.01,47.03 159.1,112.64zM427.52,512c0,-30.97 -25.34,-56.32 -56.32,-56.32c-30.97,0 -56.32,25.34 -56.32,56.32c0,30.97 25.35,56.32 56.32,56.32c30.97,0 56.32,-25.34 56.32,-56.32z" fill="url(#color-krGyjPBM)"/>
+		<g clip-path="url(#clip-Vz8ojsrS)">
+			<path d="M140.24,709.63v-461.92h743.52v461.92zM530.3,455.68c-23.09,-65.61 -85.6,-112.64 -159.1,-112.64c-93.21,0 -168.96,75.75 -168.96,168.96c0,93.21 75.75,168.96 168.96,168.96c73.5,0 136.01,-47.03 159.1,-112.64h122.5v112.64h112.64v-112.64h56.32v-112.64zM371.2,568.32c-30.97,0 -56.32,-25.34 -56.32,-56.32c0,-30.97 25.35,-56.32 56.32,-56.32c30.97,0 56.32,25.34 56.32,56.32c0,30.97 -25.34,56.32 -56.32,56.32z" filter="url(#filter-BRYnKoGw)" fill="#000000"/>
+		</g>
+	</g>
+</svg>

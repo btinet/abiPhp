@@ -1,0 +1,97 @@
+{% extends '_setup.html.twig' %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>{{ pupil }} bearbeiten</h1>
+            <h3 class="color-fg-accent">Datensatz aktualisieren</h3>
+        </div>
+        <div class="BtnGroup d-none d-lg-block">
+            <a href="#" class="BtnGroup-item btn"><i class="cil-print"></i></a>
+            <a href="#" class="BtnGroup-item btn"><i class="cil-file"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
+    <h4 class="border-bottom">Persönliche Daten</h4>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.firstname) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.firstname) }}
+            <div class="invalid-feedback color-fg-danger my-2">
+                Bitte Vornamen des Prüflings angeben.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.lastname) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.lastname) }}
+            <div class="invalid-feedback color-fg-danger my-2">
+                Bitte Nachnamen des Prüflings angeben.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.birthDate) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.birthDate) }}
+        </div>
+    </div>
+
+    <h4 class="mt-5 border-bottom">Qualifikationsphase</h4>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.teacher) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.teacher) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.examDate) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.examDate) }}
+            <div class="invalid-feedback color-fg-danger my-2">
+                Bitte Abschlussjahr des Prüflings angeben.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.qualificationPoints) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.qualificationPoints) }}
+        </div>
+    </div>
+
+    <div class="form-group mt-5">
+        <div class="form-group-body">
+            <button type="submit" class="btn btn-outline mr-1"  id="lastname">Aktualisieren</button>
+            <a href="{{ url('app_pupil_crud_index') }}"  class="btn">Abbrechen</a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

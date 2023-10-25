@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PupilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,19 @@ class Pupil
 
     #[ORM\Column(length: 3, nullable: true)]
     private ?string $qualificationPoints = null;
+
+    #[ORM\OneToMany(mappedBy: 'pupil', targetEntity: Exam::class)]
+    private Collection $exams;
+
+    public function __construct()
+    {
+        $this->exams = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 
     public function getId(): ?int
     {
@@ -108,6 +123,36 @@ class Pupil
     public function setQualificationPoints(?string $qualificationPoints): static
     {
         $this->qualificationPoints = $qualificationPoints;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Exam>
+     */
+    public function getExams(): Collection
+    {
+        return $this->exams;
+    }
+
+    public function addExam(Exam $exam): static
+    {
+        if (!$this->exams->contains($exam)) {
+            $this->exams->add($exam);
+            $exam->setPupil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExam(Exam $exam): static
+    {
+        if ($this->exams->removeElement($exam)) {
+            // set the owning side to null (unless already changed)
+            if ($exam->getPupil() === $this) {
+                $exam->setPupil(null);
+            }
+        }
 
         return $this;
     }
