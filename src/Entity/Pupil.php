@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use App\Repository\ExamRepository;
 use App\Repository\PupilRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\Migrations\Configuration\EntityManager\ManagerRegistryEntityManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Repository\RepositoryFactory;
 
 #[ORM\Entity(repositoryClass: PupilRepository::class)]
 class Pupil
@@ -156,4 +161,5 @@ class Pupil
 
         return $this;
     }
+
 }
