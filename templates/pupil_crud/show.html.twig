@@ -30,7 +30,7 @@
 
 {% block page_content %}
     <div class="mb-5">
-        <a href="{{ path('app_pupil_crud_new') }}" class="btn btn-outline">
+        <a href="{{ path('app_pupil_crud_exam_add',{'id':pupil.id}) }}" class="btn btn-outline">
             <div class=" d-flex flex-items-center">
                 <i class="icon_pencil-edit mr-2"></i>Neue Prüfung
             </div>

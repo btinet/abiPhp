@@ -1,0 +1,56 @@
+{% extends '_setup.html.twig' %}
+
+{% block page_header %}
+                    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+                        <div>
+                            <h1>{{ pupil }}</h1>
+                            <h3 class="color-fg-accent">Prüfung anlegen</h3>
+                        </div>
+
+                    </div>
+{% endblock %}
+{% block page_content %}
+    {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.examNumber) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.examNumber) }}
+            <div class="invalid-feedback color-fg-danger my-2">
+                Bitte Nummer der Prüfung angeben.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.subject) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.subject) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group-header">
+            {{ form_label(form.examPoints) }}
+        </div>
+        <div class="form-group-body">
+            {{ form_widget(form.examPoints) }}
+            <div class="invalid-feedback color-fg-danger my-2">
+                Bitte erreichte Notenpunkte (einfach) angeben.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-5">
+        <div class="form-group-body">
+            <button type="submit" class="btn btn-outline mr-1"  id="lastname">Speichern</button>
+            <a href="{{ url('app_pupil_crud_show',{'id':pupil.id}) }}"  class="btn">Abbrechen</a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
