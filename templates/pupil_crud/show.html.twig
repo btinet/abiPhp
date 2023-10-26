@@ -1,22 +1,4 @@
-{% extends '_setup.html.twig' %}
-
-{% block sidebar %}
-
-    <div class="p-3">
-        <h4>Schnellzugriff</h4>
-    </div>
-    <div class="SideNav mb-3">
-        <a href="{{ url('app_pupil_crud_index') }}" class="SideNav-item">
-            <i class="cil cil-group SideNav-icon"></i>
-            Alle Prüflinge
-        </a>
-        <a href="#" class="SideNav-item">
-            <i class="cil cil-cloud-download SideNav-icon"></i>
-            Datenblatt exportieren
-        </a>
-    </div>
-
-{% endblock %}
+{% extends '_pupil.html.twig' %}
 
 {% block page_header %}
 <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
@@ -92,56 +74,75 @@
         <div>
             <h3 class="h3">Punkte aus Prüfungsblock</h3>
         </div>
-        <span class="h3 color-fg-accent">116</span>
+        <span class="h3 color-fg-accent">{{ examPoints }}</span>
     </div>
     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap border-bottom">
         <div>
             <h3 class="h3">Gesamt</h3>
         </div>
-        <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + 116 }}</span>
+        {% if pupil.exams.count == 5 %}
+            <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + examPoints }}</span>
+            {% else %}
+                <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
+        {% endif %}
     </div>
     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
         <div>
             <h3 class="h3">Endnote</h3>
         </div>
-        <span class="h1 color-fg-accent">2,4</span>
+        {% if pupil.exams.count == 5 %}
+            <span class="h1 color-fg-accent">{{ grade }}</span>
+            {% else %}
+                <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
+        {% endif %}
     </div>
 
-    <h3 class="h4 mb-3">Mögliche Zusatzprüfungen</h3>
-    <div class="mb-3">
-        <table class="compact hovering" id="results">
-            <thead>
-            <tr>
-                <th>Prüfung</th>
-                <th>Fach</th>
-                <th class="text-right">Notwendig (einfach)</th>
-                <th class="text-right">Notwendig (vierfach)</th>
-                <th class="text-right">Kritisch</th>
-                <th class="text-right">{{ 'Actions'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th class="text-left">1</th>
-                <td>Kunst</td>
-                <td class="text-right">15</td>
-                <td class="text-right">60</td>
-                <td class="text-right"><span class="rounded color-bg-open color-fg-open text-small px-2 py-1">kein Risiko</span></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap border-bottom">
-        <div>
-            <h3 class="h3">Gesamt nach Zusatzprüfung</h3>
+    <h3 class="h3 mb-3">Mögliche Zusatzprüfungen</h3>
+    {% if pupil.exams.count == 5 %}
+        <div class="mb-3">
+            <table class="compact hovering" id="results">
+                <thead>
+                <tr>
+                    <th>Prüfung</th>
+                    <th>Fach</th>
+                    <th class="text-right">Notwendig (einfach)</th>
+                    <th class="text-right">Notwendig (kumuliert)</th>
+                    <th class="text-right">Kritisch</th>
+                    <th class="text-right">{{ 'Actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for e_exam in extended_exams %}
+                    <tr>
+                        <th class="text-left">{{ e_exam.examNumber }}</th>
+                        <td>{{ e_exam.subject }}</td>
+                        <td class="text-right">{{ e_exam.neededExamPoints }}</td>
+                        <td class="text-right">{{ ((e_exam.neededExamPoints2 * 2 + e_exam.neededExamPoints) / 3 * 4)|round }}</td>
+                        <td class="text-right">{{ e_exam.criticalPoints|raw }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + 128 }}</span>
-    </div>
-    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
-        <div>
-            <h3 class="h3">Neue Endnote</h3>
+        {% if extended_exams|length > 0 %}
+            <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap border-bottom">
+                <div>
+                    <h3 class="h3">Gesamt nach Zusatzprüfung</h3>
+                </div>
+                <span class="h1 color-fg-accent">{{ diff }}</span>
+            </div>
+            <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+                <div>
+                    <h3 class="h3">Neue Endnote</h3>
+                </div>
+                <span class="h1 color-fg-accent">{{ higherGrade }}</span>
+            </div>
+        {% endif %}
+        {% else %}
+        <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
+            <span></span>
+            <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
         </div>
-        <span class="h1 color-fg-accent">2,3</span>
-    </div>
+    {% endif %}
 {% endblock %}

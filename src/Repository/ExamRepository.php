@@ -21,20 +21,21 @@ class ExamRepository extends ServiceEntityRepository
         parent::__construct($registry, Exam::class);
     }
 
-//    /**
-//     * @return Exam[] Returns an array of Exam objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return array Returns an array of Exam objects
+     */
+    public function sumExamPoints($pupil): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('SUM(e.examPoints)')
+            ->andWhere('e.pupil = :val')
+            ->groupBy('e.pupil')
+            ->setParameter('val', $pupil)
+            ->orderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Exam
 //    {

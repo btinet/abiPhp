@@ -21,22 +21,29 @@ class ExamType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $pupil = $options['custom_option'];
+        $choices = [];
         if($pupil instanceof Pupil) {
-
+            $exams = $pupil->getExams();
+            for ($i = 1; $i <= 5; $i++){
+                $hasNumber = false;
+               foreach ($exams as $exam){
+                   if($i == $exam->getExamNumber()) {
+                       $hasNumber = true;
+                   }
+               }
+               if(!$hasNumber){
+                   $choices["$i. Prüfung"] = $i;
+               }
+            }
         }
+
         $builder
             ->add('examNumber',ChoiceType::class,[
                 'attr'=> ['class' => 'form-select width-full'],
-                'choices' => [
-                    '1. Leistungskurs' => 1,
-                    '2. Leistungskurs' => 2,
-                    '3. Grundkurs' => 3,
-                    '4. Grundkurs (mündlich)' => 4,
-                    '5. Prüfungskomponente' => 5,
-                ],
+                'choices' => $choices,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => '',
+                'placeholder' => 'Prüfung wählen...',
             ])
             ->add('subject',EntityType::class,[
                 'empty_data' => '',
