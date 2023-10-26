@@ -14,7 +14,7 @@ class ExamSubjectType extends AbstractType
     {
         $builder
             ->add('label',TextType::class,[
-                'attr' => ['class' => 'form-control width-full'],
+                'attr' => ['class' => 'form-control width-full','autofocus' => 'autofocus'],
             ])
             ->add('abbreviation',TextType::class,[
                 'attr' => ['class' => 'form-control width-full'],

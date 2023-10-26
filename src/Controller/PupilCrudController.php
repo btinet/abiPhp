@@ -74,7 +74,7 @@ class PupilCrudController extends AbstractController
             $entityManager->persist($exam);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_pupil_crud_show', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_pupil_crud_exam_add', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pupil_crud/add_exam.html.twig', [
@@ -110,7 +110,12 @@ class PupilCrudController extends AbstractController
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Pupil $pupil, ExamRepository $examRepository, GradeRepository $gradeRepository): Response
     {
-        $examPoints = array_pop($examRepository->sumExamPoints($pupil)[0]);
+        if($examPointsArray = $examRepository->sumExamPoints($pupil)) {
+            $examPoints = array_pop($examPointsArray[0]);
+        } else {
+            $examPoints = 0;
+        }
+
         $grades = $gradeRepository->findAll();
 
         $qualificationPoints = $pupil->getQualificationPoints();

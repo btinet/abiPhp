@@ -16,7 +16,7 @@ class GradeType extends AbstractType
     {
         $builder
             ->add('grade',NumberType::class,[
-        'attr' => ['class' => 'form-control width-full'],
+        'attr' => ['class' => 'form-control width-full','autofocus' => 'autofocus'],
     ])
             ->add('min',IntegerType::class,[
                 'attr' => ['class' => 'form-control width-full'],

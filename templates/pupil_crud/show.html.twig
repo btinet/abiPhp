@@ -55,15 +55,7 @@
                     <td>{{ exam.subject }}</td>
                     <td class="text-right">{{ exam.examPoints }}</td>
                     <td class="text-right">{{ exam.examPoints * 4 }}</td>
-                    <td class="d-flex flex-justify-end"></td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="d-flex flex-justify-end">{{ include('pupil_crud/_action_form.html.twig') }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -83,7 +75,7 @@
         {% if pupil.exams.count == 5 %}
             <span class="h1 color-fg-accent">{{ pupil.qualificationPoints + examPoints }}</span>
             {% else %}
-                <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
+                <span class="h3 color-fg-danger">Prüfungen fehlen!</span>
         {% endif %}
     </div>
     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
@@ -93,7 +85,7 @@
         {% if pupil.exams.count == 5 %}
             <span class="h1 color-fg-accent">{{ grade }}</span>
             {% else %}
-                <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
+                <span class="h3 color-fg-danger">Prüfungen fehlen!</span>
         {% endif %}
     </div>
 
@@ -108,7 +100,6 @@
                     <th class="text-right">Notwendig (einfach)</th>
                     <th class="text-right">Notwendig (kumuliert)</th>
                     <th class="text-right">Kritisch</th>
-                    <th class="text-right">{{ 'Actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -119,7 +110,6 @@
                         <td class="text-right">{{ e_exam.neededExamPoints }}</td>
                         <td class="text-right">{{ ((e_exam.neededExamPoints2 * 2 + e_exam.neededExamPoints) / 3 * 4)|round }}</td>
                         <td class="text-right">{{ e_exam.criticalPoints|raw }}</td>
-                        <td></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -142,7 +132,7 @@
         {% else %}
         <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5 border-bottom">
             <span></span>
-            <span class="h3 color-fg-attention">Prüfungen fehlen!</span>
+            <span class="h3 color-fg-danger">Prüfungen fehlen!</span>
         </div>
     {% endif %}
 {% endblock %}

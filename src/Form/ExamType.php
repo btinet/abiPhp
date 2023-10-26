@@ -39,7 +39,7 @@ class ExamType extends AbstractType
 
         $builder
             ->add('examNumber',ChoiceType::class,[
-                'attr'=> ['class' => 'form-select width-full'],
+                'attr'=> ['class' => 'form-select width-full','autofocus' => 'autofocus'],
                 'choices' => $choices,
                 'multiple' => false,
                 'expanded' => false,

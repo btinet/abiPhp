@@ -30,7 +30,7 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'width-full form-control']
             ])
             ->add('firstname',TextType::class,[
-                'attr'=> ['class' => 'form-control width-full']
+                'attr'=> ['class' => 'form-control width-full','autofocus' => 'autofocus']
             ])
             ->add('lastname',TextType::class,[
                 'attr'=> ['class' => 'form-control width-full']

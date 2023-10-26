@@ -22,7 +22,7 @@ class UserPasswordType extends AbstractType
                 'first_options'  => [
                     'label' => 'Password',
                     'hash_property_path' => 'password',
-                    'attr'=> ['class' => 'form-control width-full']
+                    'attr'=> ['class' => 'form-control width-full','autofocus' => 'autofocus']
                 ],
                 'first_name' => 'pass',
                 'second_options' => [

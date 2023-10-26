@@ -45,7 +45,7 @@ class UserAndPasswordType extends AbstractType
                 'mapped' => false
             ])
             ->add('firstname',TextType::class,[
-                'attr'=> ['class' => 'form-control width-full']
+                'attr'=> ['class' => 'form-control width-full','autofocus' => 'autofocus']
             ])
             ->add('lastname',TextType::class,[
                 'attr'=> ['class' => 'form-control width-full']
