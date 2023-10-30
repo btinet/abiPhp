@@ -1,11 +1,6 @@
-<html lang="de">
-    <head>
-        <title>PDF-Datei</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <h1>Dies ist eine PDF</h1>
-        <p>Und hier noch ein süßer Absatz</p>
-    </body>
-</html>
+{% extends('pdf_base.html.twig') %}
 
+{% block body %}
+<h1 class="h4">Dies ist eine PDF</h1>
+<p class="lead">Und hier noch ein süßer Absatz</p>
+{% endblock %}

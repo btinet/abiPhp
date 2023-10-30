@@ -1,5 +1,5 @@
-import { registerReactControllerComponents } from '@symfony/ux-react';
-import './bootstrap.js';
+//import { registerReactControllerComponents } from '@symfony/ux-react';
+//import './bootstrap.js';
 
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-responsive-dt';
@@ -30,7 +30,7 @@ let resultsTable = new DataTable('#results', {
     searching: false,
 });
 
-registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
+//registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
 
 (() => {
     'use strict'

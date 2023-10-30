@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 use Twig\Environment;
 use function Sodium\add;
 
@@ -28,6 +29,7 @@ class PupilCrudController extends AbstractController
 
     private $twig;
     private $pdf;
+    private $entrypointLookup;
 
     #[Route('/', name: 'index')]
     public function index(PupilRepository $pupilRepository): Response
@@ -38,16 +40,20 @@ class PupilCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/export/pdf', name: 'export_pdf')]
-    public function pdfAction( Environment $twig, Pdf $pdf): Response
+    #[Route('/{id}/export/pdf', name: 'export_pdf')]
+    public function pdfAction( Pupil $pupil, Environment $twig, Pdf $pdf, EntrypointLookupInterface $entrypointLookup): Response
     {
         $this->twig = $twig;
         $this->pdf = $pdf;
-        $html = $this->twig->render('email/author-weekly-report-pdf.html.twig', [
+        $this->pdf->setOption('enable-local-file-access', true);
+        $this->entrypointLookup = $entrypointLookup;
+        $this->entrypointLookup->reset();
+        $html = $this->twig->render('pdf_base.html.twig', [
+            'pupil' => $pupil
         ]);
         $pdf = $this->pdf->getOutputFromHtml($html);
 
-        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+        $filename = sprintf('%s-%s.pdf',$pupil, date('Y-m-d'));
 
         return new Response(
             $pdf,
@@ -80,7 +86,7 @@ class PupilCrudController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/exam/add', name: 'exam_add', methods: ['GET', 'POST'])]
+    #[Route('/{id}/exam/add', name: 'exam_add', methods: ['GET', 'POST'])]
     public function examAdd(Request $request, EntityManagerInterface $entityManager, Pupil $pupil): Response
     {
         if($pupil->getExams()->count() == 5) {
