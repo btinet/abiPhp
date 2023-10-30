@@ -37,6 +37,12 @@ registerReactControllerComponents(require.context('./react/controllers', true, /
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
+    let toastButton = document.querySelector('#dismiss');
+    let toast = document.querySelector('#toast');
+
+    toastButton.addEventListener('click', function () {
+        toast.style.display = "none";
+    });
 
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {

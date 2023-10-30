@@ -14,15 +14,21 @@ use App\Repository\TeacherRepository;
 use App\Service\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Math;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 use function Sodium\add;
 
 #[Route('/admin/pupil', name: 'app_pupil_crud_')]
 class PupilCrudController extends AbstractController
 {
+
+    private $twig;
+    private $pdf;
+
     #[Route('/', name: 'index')]
     public function index(PupilRepository $pupilRepository): Response
     {
@@ -30,6 +36,27 @@ class PupilCrudController extends AbstractController
             'pupils' => $pupilRepository->findAll(),
             'local_nav' => 'pupil'
         ]);
+    }
+
+    #[Route('/export/pdf', name: 'export_pdf')]
+    public function pdfAction( Environment $twig, Pdf $pdf): Response
+    {
+        $this->twig = $twig;
+        $this->pdf = $pdf;
+        $html = $this->twig->render('email/author-weekly-report-pdf.html.twig', [
+        ]);
+        $pdf = $this->pdf->getOutputFromHtml($html);
+
+        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+
+        return new Response(
+            $pdf,
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
@@ -57,6 +84,12 @@ class PupilCrudController extends AbstractController
     public function examAdd(Request $request, EntityManagerInterface $entityManager, Pupil $pupil): Response
     {
         if($pupil->getExams()->count() == 5) {
+
+            $this->addFlash(
+                'error',
+                'Es existieren bereits 5 Prüfungen.'
+            );
+
             return $this->redirectToRoute('app_pupil_crud_show', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
         }
         $exam = new Exam();
@@ -74,7 +107,12 @@ class PupilCrudController extends AbstractController
             $entityManager->persist($exam);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_pupil_crud_exam_add', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
+            $this->addFlash(
+                'success',
+                'Die Prüfung wurde erfolgreich angelegt.'
+            );
+
+            return $this->redirectToRoute('app_pupil_crud_show', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pupil_crud/add_exam.html.twig', [
