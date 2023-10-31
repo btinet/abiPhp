@@ -1,38 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
 
         <title>{% block title %}Prüfungsübersicht für {{ pupil }}{% endblock %}</title>
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     </head>
     <body>
         <div class="container">
-            <h1>{{ pupil }}</h1>
-            <h2>Prüfungen</h2>
-            <table class="table table-borderless table-striped">
-                <thead>
-                    <tr>
-                        <th>Prüfung</th>
-                        <th>Fach</th>
-                        <th>Punkte</th>
-                        <th>Punkte (vierfach)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for exam in pupil.exams|sort((a, b) => a.examNumber <=> b.examNumber) %}
-                    <tr>
-                        <td>{{ exam.examNumber }}</td>
-                        <td>{{ exam.subject }}</td>
-                        <td>{{ exam.examPoints }}</td>
-                        <td>{{ exam.examPoints * 4 }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="row g-3">
+                <div class="col-12">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th class="">
+                                <h5 class="mb-5">Treptow-Kolleg Berlin - Institut zur Erlangung der Hochschulreife<br>Kiefholzstraße 274, 12437 Berlin</h5>
+                                <h4 class="mb-0">Prüfungsergebnisse und Empfehlungen</h4>
+                                <h3><b>{{ pupil }}</b></h3>
+                            </th>
+                            <td class="text-right">
+                                <img src="{{  absolute_url(asset('build/images/tk.svg') ) }}" alt="Treptow-Kolleg Logo" height="103" width="103">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p><b>Tutorium</b> {{ pupil.teacher.lastname }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="h5 text-left">Punkte aus der Qualifikationsphase</th>
+                            <td class="h5 text-right">{{ pupil.qualificationPoints }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                        <tr>
+                            <th>Prüfung</th>
+                            <th>Fach</th>
+                            <th class="text-right">Punkte</th>
+                            <th class="text-right">Punkte (vierfach)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for exam in pupil.exams|sort((a, b) => a.examNumber <=> b.examNumber) %}
+                            <tr>
+                                <th>{{ exam.examNumber }}</th>
+                                <td>{{ exam.subject }}</td>
+                                <td class="text-right">{{ exam.examPoints }}</td>
+                                <td class="text-right">{{ exam.examPoints * 4 }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th class="h5 text-left">Punkte aus Prüfungsblock</th>
+                            <td class="h5 text-right text-end">{{ examPoints * 4 }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th class="h5 text-left">Gesamtpunktzahl</th>
+                            <td class="h5 text-right text-end">{{ examPoints * 4 + pupil.qualificationPoints }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th class="h5 text-left"><b>Endnote</b></th>
+                            <td class="h5 text-right text-end"><b>{{ grade }}</b></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% if extended_exams|length > 0 %}
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th class="h5 text-left">Mögliche mündliche Zusatzprüfungen</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                            <tr>
+                                <th>Prüfung</th>
+                                <th>Fach</th>
+                                <th class="text-right">Notwendig (einfach)</th>
+                                <th class="text-right">Notwendig (kumuliert)</th>
+                                <th class="text-right">Kritisch</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e_exam in extended_exams %}
+                                <tr>
+                                    <th class="text-left">{{ e_exam.examNumber }}</th>
+                                    <td>{{ e_exam.subject }}</td>
+                                    <td class="text-right">{{ e_exam.neededExamPoints }}</td>
+                                    <td class="text-right">{{ ((e_exam.neededExamPoints2 * 2 + e_exam.neededExamPoints) / 3 * 4)|round }}</td>
+                                    <td class="text-right">{{ e_exam.criticalPoints|raw }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th class="h5 text-left">Gesamt nach Zusatzprüfung</th>
+                                <td class="h5 text-right text-end">{{ diff }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th class="h5 text-left"><b>Neue Endnote</b></th>
+                                <td class="h5 text-right text-end"><b>{{ higherGrade }}</b></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th class="text-left"><b>Es sind keine Empfehlungen für mündliche Zusatzprüfungen möglich.</b></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                <div class="col-12">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td class="text-left">Gedruckt am {{ date('now')|date('d.m.Y') }} durch {{ app.user.userIdentifier }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>

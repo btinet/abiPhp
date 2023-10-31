@@ -41,15 +41,76 @@ class PupilCrudController extends AbstractController
     }
 
     #[Route('/{id}/export/pdf', name: 'export_pdf')]
-    public function pdfAction( Pupil $pupil, Environment $twig, Pdf $pdf, EntrypointLookupInterface $entrypointLookup): Response
+    public function pdfAction( Pupil $pupil, Environment $twig, Pdf $pdf, EntrypointLookupInterface $entrypointLookup, ExamRepository $examRepository, GradeRepository $gradeRepository): Response
     {
+        if($examPointsArray = $examRepository->sumExamPoints($pupil)) {
+            $examPoints = array_pop($examPointsArray[0]);
+        } else {
+            $examPoints = 0;
+        }
+
+        $grades = $gradeRepository->findAll();
+
+        $qualificationPoints = $pupil->getQualificationPoints();
+        $examPointsSum = $examPoints*4;
+        $points = $qualificationPoints + $examPointsSum;
+        $pupilGrade = 0;
+        $nextGrade = 0;
+        $nextPoints = 0;
+        $prevGrade = 0;
+        $prevPoints = 0;
+
+        foreach ($grades as $grade){
+            if($points >= $grade->getMin() and $points <= $grade->getMax()) {
+                $pupilGrade = $grade->getGrade();
+            } elseif ($points > $grade->getMax()) {
+                $prevGrade = $grade->getGrade();
+                $prevPoints = $grade->getMax();
+            } elseif ($points < $grade->getMin()) {
+                $nextGrade = $grade->getGrade();
+                $nextPoints = $grade->getMin();
+                break;
+            }
+        }
+
+        $diff = $examPointsSum + $nextPoints - $points;
+
+        $extendedExams = [];
+
+        foreach ($pupil->getExams() as $exam) {
+
+            $x1 = ($exam->getExamPoints()*4 + + $prevPoints - $points) *3/4 - ($exam->getExamPoints()*2);
+            $x2 = ($exam->getExamPoints()*4 + + $nextPoints - $points) *3/4 - ($exam->getExamPoints()*2);
+            $x = round($x2);
+            uasort($grades,new SortService('grade'));
+
+            if ($exam->getExamNumber() <= 3) {
+                $y = array_shift($grades);
+                if($x <= 15 and $points < $y->getMin()) {
+                    $eExam = new ExtendedExam();
+                    $eExam->setExamNumber($exam->getExamNumber());
+                    $eExam->setNeededExamPoints($x);
+                    $eExam->setNeededExamPoints2($exam->getExamPoints());
+                    $eExam->setSubject($exam->getSubject());
+                    $eExam->setCriticalPoints(round($x1));
+                    $extendedExams[] = $eExam;
+
+                }
+            }
+        }
+
         $this->twig = $twig;
         $this->pdf = $pdf;
         $this->pdf->setOption('enable-local-file-access', true);
         $this->entrypointLookup = $entrypointLookup;
         $this->entrypointLookup->reset();
         $html = $this->twig->render('pdf_base.html.twig', [
-            'pupil' => $pupil
+            'pupil' => $pupil,
+            'examPoints' => $examPoints,
+            'grade' => $pupilGrade,
+            'higherGrade' => $nextGrade,
+            'extended_exams' => $extendedExams,
+            'diff' => $diff + $qualificationPoints,
         ]);
         $pdf = $this->pdf->getOutputFromHtml($html);
 
