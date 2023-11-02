@@ -20,25 +20,13 @@
                     <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
                         <div>
                             <h1>{{ pupil }}</h1>
-                            <h3 class="color-fg-accent">Prüfung anlegen</h3>
+                            <h3 class="color-fg-accent">{{ exam.examNumber }}. Prüfung aktualisieren</h3>
                         </div>
 
                     </div>
 {% endblock %}
 {% block page_content %}
-    {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novalidate'}}) }}
-
-    <div class="form-group">
-        <div class="form-group-header">
-            {{ form_label(form.examNumber) }}
-        </div>
-        <div class="form-group-body">
-            {{ form_widget(form.examNumber) }}
-            <div class="invalid-feedback color-fg-danger my-2">
-                Bitte Nummer der Prüfung angeben.
-            </div>
-        </div>
-    </div>
+    {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
 
     <div class="form-group">
         <div class="form-group-header">

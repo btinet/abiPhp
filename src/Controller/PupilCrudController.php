@@ -5,15 +5,14 @@ namespace App\Controller;
 use App\Entity\Exam;
 use App\Entity\ExtendedExam;
 use App\Entity\Pupil;
+use App\Form\ExamEditType;
 use App\Form\ExamType;
 use App\Form\PupilType;
 use App\Repository\ExamRepository;
 use App\Repository\GradeRepository;
 use App\Repository\PupilRepository;
-use App\Repository\TeacherRepository;
 use App\Service\SortService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Math;
 use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 use Twig\Environment;
-use function Sodium\add;
 
 #[Route('/admin/pupil', name: 'app_pupil_crud_')]
 class PupilCrudController extends AbstractController
@@ -137,6 +135,11 @@ class PupilCrudController extends AbstractController
             $entityManager->persist($pupil);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Der Prüfling '.$pupil.' wurde erfolgreich angelegt.'
+            );
+
             return $this->redirectToRoute('app_pupil_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -144,6 +147,35 @@ class PupilCrudController extends AbstractController
             'pupil' => $pupil,
             'form' => $form,
             'local_nav' => 'pupil'
+        ]);
+    }
+
+    #[Route('/{id}/exam/edit', name: 'exam_edit', methods: ['GET', 'POST'])]
+    public function examEdit(Request $request, EntityManagerInterface $entityManager, Exam $exam): Response
+    {
+        $form = $this->createForm(ExamEditType::class,$exam);
+        $examNumber = $exam->getExamNumber();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $exam->setExamNumber($examNumber);
+            $entityManager->persist($exam);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Die '.$exam->getExamNumber().'. Prüfung wurde erfolgreich aktualisiert.'
+            );
+
+            return $this->redirectToRoute('app_pupil_crud_show', ['id' => $exam->getPupil()->getId()], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('pupil_crud/edit_exam.html.twig', [
+            'pupil' => $exam->getPupil(),
+            'exam' => $exam,
+            'form' => $form,
+            'local_nav' => 'pupil',
+            'side_nav' => '',
         ]);
     }
 
@@ -200,6 +232,11 @@ class PupilCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($pupil);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Datensatz von ' . $pupil . ' wurde erfolgreich aktualisiert.'
+            );
 
             return $this->redirectToRoute('app_pupil_crud_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -283,4 +320,40 @@ class PupilCrudController extends AbstractController
             'side_nav' => 'overview',
         ]);
     }
+
+    #[Route('/{id}/exam', name: 'exam_delete', methods: ['POST'])]
+    public function deleteExam(Request $request, Exam $exam, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$exam->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($exam);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                'Die '.$exam->getExamNumber().'. Prüfung wurde erfolgreich entfernt.'
+            );
+        }
+
+        return $this->redirectToRoute('app_pupil_crud_show', ['id' => $exam->getPupil()->getId()], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Pupil $pupil, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$pupil->getId(), $request->request->get('_token'))) {
+            foreach ($pupil->getExams() as $exam) {
+                $entityManager->remove($exam);
+            }
+            $entityManager->remove($pupil);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                'Der Prüfling ' . $pupil . ' wurde erfolgreich entfernt.'
+            );
+        }
+
+        return $this->redirectToRoute('app_pupil_crud_index',[], Response::HTTP_SEE_OTHER);
+    }
+
 }

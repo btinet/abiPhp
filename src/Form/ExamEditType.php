@@ -15,45 +15,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ExamType extends AbstractType
+class ExamEditType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $pupil = $options['custom_option'];
-        $choices = [];
-        if($pupil instanceof Pupil) {
-            $exams = $pupil->getExams();
-            for ($i = 1; $i <= 5; $i++){
-                $hasNumber = false;
-               foreach ($exams as $exam){
-                   if($i == $exam->getExamNumber()) {
-                       $hasNumber = true;
-                   }
-               }
-               if(!$hasNumber){
-                   $choices["$i. Prüfung"] = $i;
-               }
-            }
-        }
-
         $builder
-            ->add('examNumber',ChoiceType::class,[
-                'attr'=> ['class' => 'form-select width-full','autofocus' => 'autofocus'],
-                'choices' => $choices,
-                'multiple' => false,
-                'expanded' => false,
-                'required' => true
-            ])
             ->add('subject',EntityType::class,[
                 'empty_data' => '',
                 'class' => ExamSubject::class,
                 'attr'=> ['class' => 'form-select width-full'],
-                'required' => true
+                'placeholder' => '',
             ])
             ->add('examPoints',IntegerType::class,[
                 'attr'=> ['class' => 'form-control width-full'],
-                'required' => true
             ])
         ;
     }
@@ -62,7 +37,6 @@ class ExamType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Exam::class,
-            'custom_option' => null,
         ]);
     }
 

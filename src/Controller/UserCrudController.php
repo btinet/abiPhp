@@ -37,6 +37,11 @@ class UserCrudController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Benutzer {$user} wurde erfolgreich angelegt."
+            );
+
             return $this->redirectToRoute('app_user_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +72,11 @@ class UserCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Benutzer {$user} wurde erfolgreich aktualisiert."
+            );
+
             return $this->redirectToRoute('app_user_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -87,6 +97,11 @@ class UserCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Passwort von Benutzer {$user} wurde erfolgreich aktualisiert."
+            );
+
             return $this->redirectToRoute('app_user_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -104,6 +119,11 @@ class UserCrudController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                "Benutzer {$user} wurde erfolgreich entfernt."
+            );
         }
 
         return $this->redirectToRoute('app_user_crud_index', [], Response::HTTP_SEE_OTHER);

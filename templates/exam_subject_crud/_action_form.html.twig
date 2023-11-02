@@ -1,9 +1,9 @@
 <div class="BtnGroup-item">
     <a class="BtnGroup-item btn btn-sm" href="{{ path('app_exam_subject_crud_edit', {'id': exam_subject.id}) }}"><i class="icon_pencil-edit"></i></a>
-    <button form="form" type="submit" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="icon_trash_alt"></i></button>
+    <button form="form_{{ exam_subject.id }}" type="submit" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="icon_trash_alt"></i></button>
 </div>
 
-<form id="form" method="post" action="{{ path('app_exam_subject_crud_delete', {'id': exam_subject.id}) }}" onsubmit="return confirm('Möchten Sie diesen Eintrag wirklich löschen?');">
+<form id="form_{{ exam_subject.id }}" method="post" action="{{ path('app_exam_subject_crud_delete', {'id': exam_subject.id}) }}" onsubmit="return confirm('Möchten Sie diesen Eintrag wirklich löschen?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ exam_subject.id) }}">
 
 </form>

@@ -2,6 +2,7 @@
 @import "~@primer/css";
 @import "~@coreui/icons/css/free.min.css";
 @import "~datatables.net-dt/css/jquery.dataTables.min.css";
+@import "datatables.net-rowgroup-dt/css/rowGroup.dataTables.css";
 @import "~bootstrap-icons";
 @import "style.css";
 
@@ -70,4 +71,15 @@ table.hovering tbody tr:hover {
   display: block!important;
 }
 
+table.dataTable tr.dtrg-group th {
+  background-color: #eaeef2;
+  text-align: left;
 
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-1 th {
+  background-color: #ffffff;
+  border-top: 1px solid var(--borderColor-muted, var(--color-border-muted));
+  border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));
+  padding-left: 2.5em;
+}

@@ -5,11 +5,47 @@ namespace App\Entity;
 class ExtendedExam
 {
 
+    private Pupil $pupil;
+    private float $nextGrade;
     private int $examNumber;
     private string $subject;
     private int $neededExamPoints;
     private int $neededExamPoints2;
     private mixed $criticalPoints = -1;
+
+    /**
+     * @return Pupil
+     */
+    public function getPupil(): Pupil
+    {
+        return $this->pupil;
+    }
+
+    /**
+     * @param Pupil $pupil
+     */
+    public function setPupil(Pupil $pupil): void
+    {
+        $this->pupil = $pupil;
+    }
+
+    /**
+     * @return float
+     */
+    public function getNextGrade(): float
+    {
+        return $this->nextGrade;
+    }
+
+    /**
+     * @param float $nextGrade
+     */
+    public function setNextGrade(float $nextGrade): void
+    {
+        $this->nextGrade = $nextGrade;
+    }
+
+
 
     /**
      * @return int

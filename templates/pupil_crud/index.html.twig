@@ -17,14 +17,15 @@
                         </a>
                     </div>
 
-                    <table class="compact hovering" id="example">
+
+                    <table class="compact hovering" id="pupils" data-page-length="25">
                         <thead class="border-top">
                         <tr class="border-bottom">
+                            <th class=" text-left">Tutorium</th>
                             <th class=" text-left">Name</th>
                             <th class=" text-left">Vorname</th>
                             <th class=" text-right">Geburtsdatum</th>
                             <th class=" text-right">Abschlussjahr</th>
-                            <th class=" text-left">Tutorium</th>
                             <th class=" text-right">Kursblock</th>
                             <th class=" text-right">Prüfungen</th>
                             <th class=" text-right">Gesamt</th>
@@ -34,6 +35,7 @@
                         <tbody>
                         {% for pupil in pupils %}
                         <tr class="border-bottom">
+                            <td class="">{{ pupil.teacher.lastname|default('') }}</td>
                             <th class=" text-left">
                                 <a class="color-fg-default" href="{{ path('app_pupil_crud_show', {'id': pupil.id}) }}">
                                     {{ pupil.lastname }}
@@ -42,7 +44,6 @@
                             <td class="">{{ pupil.firstname }}</td>
                             <td class=" text-right">{{ pupil.birthDate|date('Y-m-d')|default('') }}</td>
                             <td class="text-right">{{ pupil.examDate|date('Y') }}</td>
-                            <td class="">{{ pupil.teacher|default('') }}</td>
                             <td class="text-right">{{ pupil.qualificationPoints|default('') }}</td>
                             {% set sum = 0 %}
                             {% for exam in pupil.exams %}
@@ -51,11 +52,7 @@
                             <td class="text-right">{{ sum * 4 }}</td>
                             <td class="text-right">{{ sum * 4 + pupil.qualificationPoints }}</td>
                             <td class="d-flex flex-justify-end">
-                                <div class="BtnGroup-item">
-                                    <a class="BtnGroup-item btn btn-sm" href="{{ path('app_pupil_crud_show', {'id': pupil.id}) }}"><i class="icon_folder-open_alt"></i></a>
-                                    <a class="BtnGroup-item btn btn-sm" href="{{ path('app_pupil_crud_edit', {'id': pupil.id}) }}"><i class="icon_pencil-edit"></i></a>
-                                    <button form="form" class="BtnGroup-item btn btn-sm color-fg-danger"><i class="icon_trash_alt"></i></button>
-                                </div>
+                                {{ include('pupil_crud/_action_form_pupil.html.twig') }}
                             </td>
                         </tr>
                         {% endfor %}

@@ -7,7 +7,7 @@
         <div class="container-lg UnderlineNav-container px-3">
             <div class="UnderlineNav-body">
                 <a href="{{ url('app_pupil_crud_index') }}" class="UnderlineNav-item" {{ local_nav == 'pupil' ? 'aria-current="true"' : '' }}><i class="cil-group mr-1"></i>Prüflinge</a>
-                <a class="UnderlineNav-item" {{ local_nav == 'exam' ? 'aria-current="true"' : '' }}><i class="cil-school mr-1"></i>Prüfungen</a>
+                <a href="{{ url('app_exam_index') }}" class="UnderlineNav-item" {{ local_nav == 'exam' ? 'aria-current="true"' : '' }}><i class="cil-school mr-1"></i>Prüfungen</a>
                 <a class="UnderlineNav-item"><i class="cil-library-add mr-1"></i>Import</a>
                 <a class="UnderlineNav-item"><i class="cil-cloud-download mr-1"></i>Export</a>
             </div>

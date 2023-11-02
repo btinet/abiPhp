@@ -35,6 +35,11 @@ class ExamSubjectCrudController extends AbstractController
             $entityManager->persist($examSubject);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Prüfungsfach {$examSubject} wurde erfolgreich gespeichert."
+            );
+
             return $this->redirectToRoute('app_exam_subject_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +70,11 @@ class ExamSubjectCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Prüfungsfach {$examSubject} wurde erfolgreich aktualisiert."
+            );
+
             return $this->redirectToRoute('app_exam_subject_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,6 +92,11 @@ class ExamSubjectCrudController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$examSubject->getId(), $request->request->get('_token'))) {
             $entityManager->remove($examSubject);
             $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                "Prüfungsfach {$examSubject} wurde erfolgreich entfernt."
+            );
         }
 
         return $this->redirectToRoute('app_exam_subject_crud_index', [], Response::HTTP_SEE_OTHER);

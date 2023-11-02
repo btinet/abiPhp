@@ -35,6 +35,11 @@ class TeacherCrudController extends AbstractController
             $entityManager->persist($teacher);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Lehrkraft {$teacher} wurde erfolgreich angelegt."
+            );
+
             return $this->redirectToRoute('app_teacher_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +70,11 @@ class TeacherCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Lehrkraft {$teacher} wurde erfolgreich aktualisiert."
+            );
+
             return $this->redirectToRoute('app_teacher_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,6 +92,11 @@ class TeacherCrudController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$teacher->getId(), $request->request->get('_token'))) {
             $entityManager->remove($teacher);
             $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                "Lehrkraft {$teacher} wurde erfolgreich entfernt."
+            );
         }
 
         return $this->redirectToRoute('app_teacher_crud_index', [], Response::HTTP_SEE_OTHER);

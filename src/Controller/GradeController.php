@@ -35,6 +35,11 @@ class GradeController extends AbstractController
             $entityManager->persist($grade);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Notenpunkteeintrag {$grade} wurde erfolgreich angelegt."
+            );
+
             return $this->redirectToRoute('app_grade_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +70,11 @@ class GradeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                "Notenpunkteeintrag {$grade} wurde erfolgreich aktualisiert."
+            );
+
             return $this->redirectToRoute('app_grade_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,6 +92,11 @@ class GradeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$grade->getId(), $request->request->get('_token'))) {
             $entityManager->remove($grade);
             $entityManager->flush();
+
+            $this->addFlash(
+                'error',
+                "Notenpunkteeintrag {$grade} wurde erfolgreich entfernt."
+            );
         }
 
         return $this->redirectToRoute('app_grade_index', [], Response::HTTP_SEE_OTHER);
