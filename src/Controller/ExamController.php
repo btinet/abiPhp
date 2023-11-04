@@ -20,6 +20,7 @@ class ExamController extends AbstractController
     public function index(PupilRepository $pupilRepository, ExamRepository $examRepository, GradeRepository $gradeRepository): Response
     {
         $extendedExams = [];
+        $chartData = [];
 
         foreach ($pupilRepository->findAll() as $pupil) {
 
@@ -76,6 +77,11 @@ class ExamController extends AbstractController
                         $eExam->setSubject($exam->getSubject());
                         $eExam->setCriticalPoints(round($x1));
                         $extendedExams[] = $eExam;
+                        if(isset($chartData["{$exam->getSubject()}"])) {
+                            $chartData["{$exam->getSubject()}"] = $chartData["{$exam->getSubject()}"] + 1;
+                        } else {
+                            $chartData["{$exam->getSubject()}"] = 1;
+                        }
 
                     }
                 }
@@ -83,8 +89,11 @@ class ExamController extends AbstractController
 
         }
 
+        arsort($chartData);
+
         return $this->render('exam/index.html.twig', [
             'exams' => $extendedExams,
+            'chart_data' => $chartData,
             'local_nav' => 'exam'
         ]);
 

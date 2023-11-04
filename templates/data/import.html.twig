@@ -1,0 +1,96 @@
+{% extends '_exam.html.twig' %}
+
+{% block actions %}
+    <div class="SideNav mb-3">
+        <a href="{{ url('app_pupil_crud_index') }}" class="SideNav-item">
+            <i class="cil cil-group SideNav-icon"></i>
+            Daten exportieren
+        </a>
+    </div>
+{% endblock %}
+
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>Prüflinge hinzufügen</h1>
+            <h2 class="h3 color-fg-accent">Stammdaten importieren</h2>
+        </div>
+        <span class="text-muted h4"></span>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    {% if file_content %}
+        <h3>Daten überprüfen und speichern</h3>
+        <div class="form-group">
+            <div class="form-group-body">
+                <p>Bitte überprüfen Sie die erfassten Daten. Sollte alles korrekt sein, können Sie die neuen Daten speichern.</p>
+            </div>
+        </div>
+        <form method="post" action="{{ url('app_data_import_persist') }}">
+            <input type="hidden" name="data" value="{{ file }}">
+            <div class="form-group mt-5">
+                <div class="form-group-body">
+                    <button type="submit" class="btn btn-outline mr-1">Daten speichern</button>
+                    <a href="{{ url('app_data_import') }}" class="btn">Neue Datei erfassen</a>
+                </div>
+            </div>
+        </form>
+    {% else %}
+
+        <div class="mb-5">
+            Laden Sie bei Bedarf die <a download="Vorlage - Datenimport der Kollegiaten.csv" href="{{ asset('uploads/Vorlage_Kollegiaten.csv') }}" class="">Vorlage</a> herunter. Beachten Sie bitte, dass Sie die Kopfzeile beibehalten.
+        </div>
+
+        {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
+
+        <div class="form-group">
+            <div class="form-group-header">
+                {{ form_label(form.csv_file) }}
+            </div>
+            <div class="form-group-body">
+                {{ form_widget(form.csv_file) }}
+                <div class="invalid-feedback color-fg-danger my-2">
+                    Bitte gültige CSV-Datei angeben.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-5">
+            <div class="form-group-body">
+                <button type="submit" class="btn btn-outline mr-1">Importieren</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
+
+{% block page_footer %}
+    {% if file_content %}
+        <div class="my-5">
+            <table class="compact hovering" id="simple" data-page-length="25">
+                <thead class="border-top">
+                <tr class="border-bottom">
+                    <th class=" text-left">Datensatz</th>
+                    <th class=" text-left">Vorname</th>
+                    <th class=" text-left">Name</th>
+                    <th class=" text-left">Geburtsdatum</th>
+                    <th class=" text-left">Abschlussjahr</th>
+                    <th class=" text-left">Kursblock</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in file_content %}
+                    <tr class="border-bottom">
+                        <td class="">{{ loop.index }}</td>
+                        {% for column in row %}
+                            <td class="">{{ column }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

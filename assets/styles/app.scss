@@ -83,3 +83,11 @@ table.dataTable tr.dtrg-group.dtrg-level-1 th {
   border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));
   padding-left: 2.5em;
 }
+
+input::file-selector-button {
+  display: none;
+}
+
+input::-webkit-file-upload-button {
+  display: none;
+}
