@@ -3,19 +3,24 @@
 namespace App\Controller;
 
 
+use App\Entity\Exam;
 use App\Entity\Pupil;
 use App\Form\PupilImportType;
+use App\Repository\PupilRepository;
 use App\Repository\TeacherRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use ParseCsv\Csv;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/data', name: 'app_data_')]
@@ -49,18 +54,24 @@ class DataImportController extends AbstractController
                 $csvFile->move($this->getParameter('upload_directory'),$csvFile->getFilename());
 
                 if (($handle = fopen($this->getParameter('upload_directory').'/'.$csvFile->getFilename(), "r")) != FALSE) {
-                    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                        if($row !== 1) {
-                            $fileContent[$row][] = $data[0];
-                            $fileContent[$row][] = $data[1];
-                            $fileContent[$row][] = $data[2];
-                            $fileContent[$row][] = $data[3];
-                            $fileContent[$row][] = $data[4];
+                    try {
+                        while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                            if($row !== 1) {
+                                $fileContent[$row][] = $data[0];
+                                $fileContent[$row][] = $data[1];
+                                $fileContent[$row][] = $data[2];
+                                $fileContent[$row][] = $data[3];
+                                $fileContent[$row][] = $data[4];
+                            }
+                            $row++;
                         }
-                        $row++;
+                        fclose($handle);
+                        $csv = $this->getParameter('upload_directory').'/'.$csvFile->getFilename();
+                    } catch (Exception $e){
+                        $this->addFlash('error',$e->getMessage());
+                        return $this->redirectToRoute('app_data_import', [], Response::HTTP_SEE_OTHER);
                     }
-                    fclose($handle);
-                    $csv = $this->getParameter('upload_directory').'/'.$csvFile->getFilename();
+
                 }
             } else {
                 $this->addFlash('error','Es wurde keine CSV-Datei angegeben.');
@@ -90,9 +101,9 @@ class DataImportController extends AbstractController
                 while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                     if($row>1){
                         $pupil = new Pupil();
-                        $pupil->setFirstname($data[0]);
-                        $pupil->setLastname($data[1]);
                         try {
+                            $pupil->setFirstname($data[0]);
+                            $pupil->setLastname($data[1]);
                             if($data[2] != null) {
                                 $date = DateTime::createFromFormat('d.m.Y', $data[2]);
                                 if(!is_bool($date)){
@@ -107,7 +118,7 @@ class DataImportController extends AbstractController
                                 }
                             }
                         } catch (Exception $e) {
-                            $this->addFlash('error','Das Geburtsdatum muss als TT.MM.YYYY formatiert sein.');
+                            $this->addFlash('error',$e->getCode());
                             return $this->redirectToRoute('app_data_import', [], Response::HTTP_SEE_OTHER);
                         }
 
@@ -125,6 +136,45 @@ class DataImportController extends AbstractController
             $this->addFlash('success',($row-2).' Datensätze erfolgreich gespeichert.');
             return $this->redirectToRoute('app_pupil_crud_index', [], Response::HTTP_SEE_OTHER);
 
+    }
+
+    #[Route('/export/pupil', name: 'export_pupil', methods: ['GET','POST'])]
+    public function export(PupilRepository $pupilRepository): Response
+    {
+
+        $data_array = [];
+        foreach ($pupilRepository->findAll() as $pupil)
+        {
+            $examPoints = 0;
+            foreach ($pupil->getExams() as $exam){
+                /** @var $exam Exam */
+                $examPoints += $exam->getExamPoints();
+            }
+
+            $birthdate = $pupil->getBirthDate() ? $pupil->getBirthDate()->format('d.m.Y') : '';
+            $examDate = $pupil->getExamDate()  ? $pupil->getExamDate()->format('Y') : '';
+
+            $data_array[] = [
+                $pupil->getFirstname(),
+                $pupil->getLastname(),
+                $birthdate,
+                $examDate,
+                $pupil->getQualificationPoints(),
+            ];
+        }
+        $csv = new Csv();
+        $csv->linefeed = "\n";
+        $header = array('Vorname', 'Nachname','Geburtsdatum','Abiturjahr','Kursblock');
+        $csv->output('Prüflinge.csv', $data_array, $header, ';');
+        $response = new StreamedResponse(function() use ($csv) {
+        });
+        $response->headers->set('Content-Type', 'text/csv');
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            $csv->output_filename
+        );
+        $response->headers->set('Content-Disposition', $disposition);
+        return $response;
     }
 
 }

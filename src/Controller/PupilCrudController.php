@@ -238,7 +238,7 @@ class PupilCrudController extends AbstractController
                 'Datensatz von ' . $pupil . ' wurde erfolgreich aktualisiert.'
             );
 
-            return $this->redirectToRoute('app_pupil_crud_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_pupil_crud_show', ['id' => $pupil->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pupil_crud/edit.html.twig', [

@@ -18,7 +18,7 @@
                     </div>
 
 
-                    <table class="compact hovering" id="pupils" data-page-length="25">
+                    <table class="compact hovering" id="pupils" data-page-length="10">
                         <thead class="border-top">
                         <tr class="border-bottom">
                             <th class=" text-left">Tutorium</th>
@@ -42,7 +42,7 @@
                                 </a>
                             </th>
                             <td class="">{{ pupil.firstname }}</td>
-                            <td class=" text-right">{{ pupil.birthDate|date('Y-m-d')|default('') }}</td>
+                            <td class=" text-right">{% if pupil.birthDate %}{{ pupil.birthDate|date('Y-m-d')}}{% endif %}</td>
                             <td class="text-right">{{ pupil.examDate|date('Y') }}</td>
                             <td class="text-right">{{ pupil.qualificationPoints|default('') }}</td>
                             {% set sum = 0 %}

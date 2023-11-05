@@ -51,7 +51,8 @@ let examTable = new DataTable('#exams', {
     "language": tableOptions,
     order: [
         [0, 'asc'],
-        [1, 'asc']
+        [1, 'asc'],
+        [2, 'asc']
     ],
     rowGroup: {
         dataSrc: [0, 1]

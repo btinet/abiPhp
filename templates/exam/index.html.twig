@@ -15,7 +15,7 @@
 
 {% block page_footer %}
     <div class="mb-3">
-        <table class="compact hovering" id="exams" data-page-length="25">
+        <table class="compact hovering" id="exams" data-page-length="10">
             <thead>
             <tr>
                 <th>Tutorium</th>
@@ -33,7 +33,7 @@
                     <td class="text-left">{{ exam.pupil.teacher.lastname|default('- ohne Zuordnung -') }}</td>
                     <td class="text-left">
                         <a class="color-fg-default" href="{{ path('app_pupil_crud_show', {'id': exam.pupil.id}) }}">
-                            {{ exam.pupil }}
+                            {{ exam.pupil.lastname }}, {{ exam.pupil.firstname }} <span style="font-weight: 500" class="color-fg-muted">(geboren am {% if exam.pupil.birthDate %}{{ exam.pupil.birthDate|date('d.m.Y')}}{% endif %})</span>
                         </a>
                     </td>
                     <td class="text-left">{{ exam.examNumber }}</td>

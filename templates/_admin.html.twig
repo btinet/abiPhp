@@ -4,7 +4,7 @@
 
 {% block local_nav %}
     <nav class="UnderlineNav UnderlineNav--full position-sticky top-0 color-bg-default" style="z-index: 999">
-        <div class="container-lg UnderlineNav-container px-3">
+        <div class="UnderlineNav-container px-3">
             <div class="UnderlineNav-body">
                 <a href="{{ url('app_pupil_crud_index') }}" class="UnderlineNav-item" {{ local_nav == 'pupil' ? 'aria-current="true"' : '' }}><i class="cil-group mr-1"></i>Prüflinge</a>
                 <a href="{{ url('app_exam_index') }}" class="UnderlineNav-item" {{ local_nav == 'exam' ? 'aria-current="true"' : '' }}><i class="cil-school mr-1"></i>Prüfungen</a>
