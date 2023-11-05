@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                         {% for pupil in pupils %}
-                        <tr class="border-bottom">
+                        <tr class="border-bottom" style="{{ pupil.teacher ? '' : 'background-color: #fff8c5!important' }}">
                             <td class="">{{ pupil.teacher.lastname|default('- keine Zuordnung -') }}</td>
                             <th class=" text-left">
                                 <a class="color-fg-default" href="{{ path('app_pupil_crud_show', {'id': pupil.id}) }}">

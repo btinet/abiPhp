@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Pupil;
 use App\Form\PupilImportType;
+use App\Repository\TeacherRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
@@ -22,10 +23,12 @@ class DataImportController extends AbstractController
 {
 
     #[Route('/import', name: 'import', methods: ['GET', 'POST'])]
-    public function import(Request $request): Response
+    public function import(Request $request, TeacherRepository $teacherRepository): Response
     {
 
+        $teachers = $teacherRepository->findAll();
         $csv = null;
+        $originalFileName = null;
         $fileContent = [];
 
         $form = $this->createForm(PupilImportType::class);
@@ -35,6 +38,7 @@ class DataImportController extends AbstractController
             /** @var UploadedFile $csvFile */
             $csvFile = $form->get('csv_file')->getData();
             //die($csvFile->getClientMimeType());
+            $originalFileName = $csvFile->getClientOriginalName();
 
 
             $row = 1;
@@ -68,15 +72,17 @@ class DataImportController extends AbstractController
             'form' => $form,
             'file_content' => $fileContent,
             'file' => $csv,
+            'origin_file' => $originalFileName,
+            'teachers' => $teachers
         ]);
     }
 
     #[Route('/import/persist', name: 'import_persist', methods: ['POST'])]
-    public function persist(Request $request, EntityManagerInterface $entityManager): Response
+    public function persist(Request $request, TeacherRepository $teacherRepository, EntityManagerInterface $entityManager): Response
     {
         $row = 1;
-
         $csvFile = $request->request->get('data');
+        $teacherId = $request->request->get('teacher');
         // this condition is needed because the 'brochure' field is not required
         // so the PDF file must be processed only when a file is uploaded
 
@@ -106,6 +112,9 @@ class DataImportController extends AbstractController
                         }
 
                         $pupil->setQualificationPoints($data[4]);
+                        if($teacherId) {
+                            $pupil->setTeacher($teacherRepository->find($teacherId));
+                        }
                         $entityManager->persist($pupil);
                         $entityManager->flush();
                     }

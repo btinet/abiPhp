@@ -21,25 +21,11 @@
 
 {% block page_content %}
     {% if file_content %}
-        <h3>Daten überprüfen und speichern</h3>
-        <div class="form-group">
-            <div class="form-group-body">
-                <p>Bitte überprüfen Sie die erfassten Daten. Sollte alles korrekt sein, können Sie die neuen Daten speichern.</p>
-            </div>
-        </div>
-        <form method="post" action="{{ url('app_data_import_persist') }}">
-            <input type="hidden" name="data" value="{{ file }}">
-            <div class="form-group mt-5">
-                <div class="form-group-body">
-                    <button type="submit" class="btn btn-outline mr-1">Daten speichern</button>
-                    <a href="{{ url('app_data_import') }}" class="btn">Neue Datei erfassen</a>
-                </div>
-            </div>
-        </form>
+
     {% else %}
 
         <div class="mb-5">
-            Laden Sie bei Bedarf die <a download="Vorlage - Datenimport der Kollegiaten.csv" href="{{ asset('uploads/Vorlage_Kollegiaten.csv') }}" class="">Vorlage</a> herunter. Beachten Sie bitte, dass Sie die Kopfzeile beibehalten.
+            Laden Sie bei Bedarf die <a download="Vorlage - Datenimport der Kollegiaten.csv" href="{{ asset('uploads/Vorlage_Kollegiaten.csv') }}" class="">Vorlage</a> herunter. Beachten Sie bitte, dass Sie die Kopfzeile beibehalten. Als Trennzeichen verwenden Sie das <b>Semikolon</b>. Die Benennungen im Spaltenkopf dienen nur zur Orientierung, die Reihenfolge muss jedoch eingehalten werden.
         </div>
 
         {{ form_start(form,{'attr':{'class':'needs-validation','novalidate':'novaldiate'}}) }}
@@ -58,7 +44,7 @@
 
         <div class="form-group mt-5">
             <div class="form-group-body">
-                <button type="submit" class="btn btn-outline mr-1">Importieren</button>
+                <button type="submit" class="btn btn-outline mr-1">Überprüfen</button>
             </div>
         </div>
 
@@ -68,7 +54,11 @@
 
 {% block page_footer %}
     {% if file_content %}
-        <div class="my-5">
+        <div  class="Box color-border-success-emphasis color-bg-success mx-auto border p-3 rounded-2 mb-5">
+            <h3>Daten überprüfen und speichern</h3>
+            <span>Bitte überprüfen Sie die erfassten Daten. Sollte alles korrekt sein, können Sie die neuen Daten speichern.</span>
+        </div>
+        <div class="mt-5">
             <table class="compact hovering" id="simple" data-page-length="25">
                 <thead class="border-top">
                 <tr class="border-bottom">
@@ -91,6 +81,39 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <span><b>Importierte Datei:</b> {{ origin_file }}</span>
+            <div class="d-flex flex-justify-between flex-items-end">
+                <div class="d-flex flex-justify-start flex-items-center">
+                    <form method="post" action="{{ url('app_data_import_persist') }}">
+
+                        <div class="form-group mb-5">
+                            <div class="form-group-header">
+                                <label for="teachers">Tutorium zuordnen</label>
+                            </div>
+                            <div class="form-group-body">
+                                <select id="teachers" class="form-select width-full" name="teacher">
+                                    <option selected></option>
+                                    {% for teacher in teachers %}
+                                        <option value="{{ teacher.id }}">{{ teacher.lastname }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="data" value="{{ file }}">
+
+                        <div class="form-group">
+                            <div class="form-group-body">
+                                <button type="submit" class="btn btn-outline mr-1">Daten speichern</button>
+                                <a href="{{ url('app_data_import') }}" class="btn">Neue Datei erfassen</a>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
         </div>
+
     {% endif %}
 {% endblock %}
