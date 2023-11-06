@@ -1,0 +1,78 @@
+{% extends '_exam.html.twig' %}
+
+{% block actions %}
+{% endblock %}
+
+{% block page_header %}
+    <div class=" d-flex flex-justify-between flex-items-baseline flex-wrap mb-5">
+        <div>
+            <h1>Daten exportieren</h1>
+            <h2 class="h3 color-fg-accent">Empfehlungen, Ergebnisse und Statistiken</h2>
+        </div>
+        <span class="text-muted h4"></span>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    <h3 class="mb-5">Prüflinge</h3>
+    <div class="mb-3 d-flex flex-justify-between flex-items-center">
+        <span>Stammdaten aller Prüflinge</span>
+        <a href="{{ url('app_export_pupil_all') }}" class="btn">CSV exportieren</a>
+    </div>
+    <div class="mb-3 d-flex flex-justify-between flex-items-center">
+        <span>Prüflinge eines Tutoriums</span>
+        <form>
+            <label class="mr-2" for="pupil">Tutorium</label>
+            <select id="pupil" class="form-select mr-2">
+                <option selected>Tutorium wählen</option>
+            </select>
+            <button type="submit" class="btn">CSV exportieren</button>
+        </form>
+    </div>
+    <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
+        <span>Datenblatt eines Prüflings</span>
+        <form>
+            <label class="mr-2" for="pupil">Prüfling</label>
+            <select id="pupil" class="form-select mr-2">
+                <option selected>Prüfling wählen</option>
+            </select>
+            <button type="submit" class="btn">PDF exportieren</button>
+        </form>
+    </div>
+
+    <h3 class="mb-5">Zusatzprüfungen</h3>
+    <div class="mb-3 d-flex flex-justify-between flex-items-center">
+        <span>Prüfungen aller Prüflinge</span>
+        <a href="{{ url('app_export_pupil_all') }}" class="btn">CSV exportieren</a>
+    </div>
+    <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
+        <span>Prüfungen eines Tutoriums</span>
+        <form>
+            <label class="mr-2" for="pupil">Tutorium</label>
+            <select id="pupil" class="form-select mr-2">
+                <option selected>Tutorium wählen</option>
+            </select>
+            <button type="submit" class="btn">CSV exportieren</button>
+        </form>
+    </div>
+
+    <h3 class="mb-5">Statistiken zu Abiturprüfungen</h3>
+    <div class="mb-3 d-flex flex-justify-between flex-items-center">
+        <span>Anonyme Ergebnisse seit Aufzeichnung</span>
+        <a href="{{ url('app_export_pupil_all') }}" class="btn">CSV exportieren</a>
+    </div>
+    <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
+        <span>Anonyme Ergebnisse eines Jahrgangs</span>
+        <form>
+            <label class="mr-2" for="pupil">Jahr</label>
+            <select id="pupil" class="form-select mr-2">
+                <option selected>Abiturjahr wählen</option>
+            </select>
+            <button type="submit" class="btn">CSV exportieren</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block page_footer %}
+
+{% endblock %}
