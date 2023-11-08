@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\Exam;
 use App\Entity\Pupil;
 use App\Form\PupilImportType;
+use App\Repository\ExamRepository;
+use App\Repository\ExamSubjectRepository;
 use App\Repository\PupilRepository;
 use App\Repository\TeacherRepository;
 use DateTime;
@@ -28,7 +30,7 @@ class DataImportController extends AbstractController
 {
 
     #[Route('/import', name: 'import', methods: ['GET', 'POST'])]
-    public function import(Request $request, TeacherRepository $teacherRepository): Response
+    public function import(Request $request, TeacherRepository $teacherRepository, ExamSubjectRepository $examSubjectRepository): Response
     {
 
         $teachers = $teacherRepository->findAll();
@@ -57,11 +59,29 @@ class DataImportController extends AbstractController
                     try {
                         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                             if($row !== 1) {
-                                $fileContent[$row][] = $data[0];
-                                $fileContent[$row][] = $data[1];
-                                $fileContent[$row][] = $data[2];
-                                $fileContent[$row][] = $data[3];
-                                $fileContent[$row][] = $data[4];
+
+                                for($i = 0; $i < 16; $i++){
+                                    if($i == 5 or $i == 7 or $i == 9 or $i == 11 or $i == 13) {
+                                       $examSubject = $examSubjectRepository->findOneBy(['abbreviation' => $data[$i]]);
+                                       if($examSubject) {
+                                           $fileContent[$row][] = $examSubject;
+                                       } else {
+                                           $fileContent[$row][] = 'FEHLER';
+                                           $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+2));
+                                       }
+
+                                    } else if($i == 15 and !empty($data[$i])) {
+                                        $teacher = $teacherRepository->findOneBy(['abbreviation' => $data[$i]]);
+                                        if($teacher) {
+                                            $fileContent[$row][] = $teacher->getLastname();
+                                        } else {
+                                            $fileContent[$row][] = 'FEHLER';
+                                            $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+2));
+                                        }
+                                    } else {
+                                        $fileContent[$row][] = $data[$i];
+                                    }
+                                }
                             }
                             $row++;
                         }
@@ -89,7 +109,7 @@ class DataImportController extends AbstractController
     }
 
     #[Route('/import/persist', name: 'import_persist', methods: ['POST'])]
-    public function persist(Request $request, TeacherRepository $teacherRepository, EntityManagerInterface $entityManager): Response
+    public function persist(Request $request, TeacherRepository $teacherRepository, ExamSubjectRepository $examSubjectRepository, EntityManagerInterface $entityManager): Response
     {
         $row = 1;
         $csvFile = $request->request->get('data');
@@ -125,7 +145,25 @@ class DataImportController extends AbstractController
                         $pupil->setQualificationPoints($data[4]);
                         if($teacherId) {
                             $pupil->setTeacher($teacherRepository->find($teacherId));
+                        } elseif (!empty($data[15])) {
+                            $teacher = $teacherRepository->findOneBy(['abbreviation' => $data[15]]);
+                            if($teacher) {
+                                $pupil->setTeacher($teacher);
+                            }
                         }
+                        for($i = 1; $i <= 5; $i++) {
+                            $examSubject = $examSubjectRepository->findOneBy(['abbreviation' => $data[$i*2+3]]);
+                            if($examSubject) {
+                                $exam = new Exam();
+                                $exam->setExamNumber($i);
+                                $exam->setSubject($examSubject);
+                                $exam->setExamPoints($data[$i*2+4]);
+                                $entityManager->persist($exam);
+                                $pupil->addExam($exam);
+                            }
+                        }
+
+                        $pupil->setQualificationPoints($data[4]);
                         $entityManager->persist($pupil);
                         $entityManager->flush();
                     }

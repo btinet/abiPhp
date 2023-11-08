@@ -45,13 +45,14 @@
                         <div class="pb-12 px-3 pl-md-0 pr-md-5 mt-2">
 
                             {% for label, messages in app.flashes %}
-                                {% for message in messages %}
                                     <div class="Toast Toast--{{ label }}" id="toast" style="position: fixed; left: 50%; top: 3rem; z-index: 12000; transform: translate(-50%, -50%);">
                                 <span class="Toast-icon">
                                     <i class="bi bi-exclamation-diamond"></i>
                                 </span>
                                         <span class="Toast-content">
-                                    {{ message }}
+                                    {% for message in messages %}
+                                    <div class="d-block my-1">{{ message }}</div>
+                                    {% endfor %}
                                 </span>
                                         <button id="dismiss" class="Toast-dismissButton">
                                             <svg width="12"
@@ -67,7 +68,6 @@
                                             </svg>
                                         </button>
                                     </div>
-                                {% endfor %}
                             {% endfor %}
 
 

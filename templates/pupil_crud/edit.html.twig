@@ -1,7 +1,14 @@
-{% extends '_setup.html.twig' %}
+{% extends '_pupil.html.twig' %}
 
-{% block sidebar %}
-
+{% block actions %}
+    <a href="{{ url('app_pupil_crud_index') }}" class="SideNav-item">
+        <i class="cil cil-group SideNav-icon"></i>
+        Alle Prüflinge
+    </a>
+    <a href="{{ url('app_pupil_crud_show',{'id':pupil.id}) }}" class="SideNav-item">
+        <i class="cil cil-user SideNav-icon"></i>
+        {{ pupil }}
+    </a>
 {% endblock %}
 
 {% block page_header %}

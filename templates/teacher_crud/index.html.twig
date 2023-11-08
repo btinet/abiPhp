@@ -20,6 +20,7 @@
         <tr>
             <th>Nachname</th>
             <th>Vorname</th>
+            <th>{{ 'Abbreviation'|trans }}</th>
             <th class="text-right">Lernende</th>
             <th class="text-right">Aktion</th>
         </tr>
@@ -29,6 +30,7 @@
             <tr>
                 <th scope="row" class="text-left">{{ teacher.lastname }}</th>
                 <td>{{ teacher.firstname }}</td>
+                <td>{{ teacher.abbreviation }}</td>
                 <td class="text-right">{{ teacher.pupils.count }}</td>
                 <td class="d-flex flex-justify-end">
                     {{ include('teacher_crud/_action_form.html.twig') }}

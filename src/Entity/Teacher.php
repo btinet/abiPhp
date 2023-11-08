@@ -24,6 +24,9 @@ class Teacher
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Pupil::class)]
     private Collection $pupils;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $abbreviation = null;
+
     public function __construct()
     {
         $this->pupils = new ArrayCollection();
@@ -89,6 +92,18 @@ class Teacher
                 $pupil->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAbbreviation(): ?string
+    {
+        return $this->abbreviation;
+    }
+
+    public function setAbbreviation(?string $abbreviation): static
+    {
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }

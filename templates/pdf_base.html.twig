@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <p><b>Tutorium</b> {{ pupil.teacher.lastname }}</p>
+                                <p><b>Tutorium</b> {{ pupil.teacher.lastname|default('nicht zugeordnet!') }}</p>
                             </td>
                         </tr>
                         <tr>
