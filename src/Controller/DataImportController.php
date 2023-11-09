@@ -10,13 +10,17 @@ use App\Repository\ExamRepository;
 use App\Repository\ExamSubjectRepository;
 use App\Repository\PupilRepository;
 use App\Repository\TeacherRepository;
+use DateException;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use ErrorException;
 use Exception;
 use ParseCsv\Csv;
+use PHPUnit\Framework\Warning;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -24,6 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use TypeError;
 
 #[Route('/admin/data', name: 'app_data_')]
 class DataImportController extends AbstractController
@@ -49,6 +54,7 @@ class DataImportController extends AbstractController
 
 
             $row = 1;
+            $i = 0;
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($csvFile->getClientMimeType() == 'text/csv') {
@@ -67,16 +73,25 @@ class DataImportController extends AbstractController
                                            $fileContent[$row][] = $examSubject;
                                        } else {
                                            $fileContent[$row][] = 'FEHLER';
-                                           $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+2));
+                                           $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+1));
                                        }
 
-                                    } else if($i == 15 and !empty($data[$i])) {
+                                    } elseif ($i == 2) {
+                                        $date = DateTime::createFromFormat("d.m.Y",$data[$i]);
+                                        if($date) {
+                                            $fileContent[$row][] = $date->format('d.m.Y');
+                                        } else {
+                                            $fileContent[$row][] = 'FEHLER';
+                                            $this->addFlash('error',sprintf("Das Datumsformat %s in Datensatz %s, Spalte %s ist nicht korrekt.",$data[$i],$row-1,$i+1));
+                                        }
+
+                                    } elseif($i == 15 and !empty($data[$i])) {
                                         $teacher = $teacherRepository->findOneBy(['abbreviation' => $data[$i]]);
                                         if($teacher) {
                                             $fileContent[$row][] = $teacher->getLastname();
                                         } else {
                                             $fileContent[$row][] = 'FEHLER';
-                                            $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+2));
+                                            $this->addFlash('error',sprintf("Datensatz %s enthält einen Fehler in Spalte %s",$row-1,$i+1));
                                         }
                                     } else {
                                         $fileContent[$row][] = $data[$i];
@@ -87,8 +102,11 @@ class DataImportController extends AbstractController
                         }
                         fclose($handle);
                         $csv = $this->getParameter('upload_directory').'/'.$csvFile->getFilename();
-                    } catch (Exception $e){
+                    } catch (DateException $e){
                         $this->addFlash('error',$e->getMessage());
+                        return $this->redirectToRoute('app_data_import', [], Response::HTTP_SEE_OTHER);
+                    } catch (ErrorException $e) {
+                        $this->addFlash('error',"Warnung: Die Datei {$csvFile->getClientOriginalName()} enthält nur {$i} von 16 Spalten. Bitte nutzen Sie die Vorlage.");
                         return $this->redirectToRoute('app_data_import', [], Response::HTTP_SEE_OTHER);
                     }
 
