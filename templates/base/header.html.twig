@@ -38,7 +38,6 @@
                     <div class="dropdown-caret"></div>
                 </summary>
                 <ul class="dropdown-menu dropdown-menu-sw" style="z-index: 1100">
-                    <li><a class="dropdown-item" href="#">Einstellungen</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li>
                             <a href="{{ url('app_setup') }}" {{ local_nav == 'settings' ? 'aria-current="true"' : '' }} class="dropdown-item">

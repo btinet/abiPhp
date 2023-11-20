@@ -1,5 +1,7 @@
 {% extends '_exam.html.twig' %}
 
+{% block title %}Exportieren - Abi-Rechner | Treptow-Kolleg Berlin{% endblock %}
+
 {% block actions %}
 {% endblock %}
 
@@ -26,7 +28,7 @@
             <select id="pupil" class="form-select mr-2">
                 <option selected>Tutorium wählen</option>
             </select>
-            <button type="submit" class="btn">CSV exportieren</button>
+            <button type="submit" disabled class="btn">CSV exportieren</button>
         </form>
     </div>
     <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
@@ -36,14 +38,14 @@
             <select id="pupil" class="form-select mr-2">
                 <option selected>Prüfling wählen</option>
             </select>
-            <button type="submit" class="btn">PDF exportieren</button>
+            <button type="submit" disabled class="btn">PDF exportieren</button>
         </form>
     </div>
 
     <h3 class="mb-3">Zusatzprüfungen</h3>
     <div class="mb-3 d-flex flex-justify-between flex-items-center">
         <span>Prüfungen aller Prüflinge</span>
-        <a href="{{ url('app_export_pupil_all') }}" class="btn">CSV exportieren</a>
+        <a href="#" class="btn">CSV exportieren</a>
     </div>
     <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
         <span>Prüfungen eines Tutoriums</span>
@@ -52,14 +54,14 @@
             <select id="pupil" class="form-select mr-2">
                 <option selected>Tutorium wählen</option>
             </select>
-            <button type="submit" class="btn">CSV exportieren</button>
+            <button type="submit" disabled class="btn">CSV exportieren</button>
         </form>
     </div>
 
     <h3 class="mb-3">Statistiken zu Abiturprüfungen</h3>
     <div class="mb-3 d-flex flex-justify-between flex-items-center">
         <span>Anonyme Ergebnisse seit Aufzeichnung</span>
-        <a href="{{ url('app_export_pupil_all') }}" class="btn">CSV exportieren</a>
+        <a href="#" class="btn">CSV exportieren</a>
     </div>
     <div class="mb-3 pb-3 border-bottom d-flex flex-justify-between flex-items-center">
         <span>Anonyme Ergebnisse eines Jahrgangs</span>
@@ -68,7 +70,7 @@
             <select id="pupil" class="form-select mr-2">
                 <option selected>Abiturjahr wählen</option>
             </select>
-            <button type="submit" class="btn">CSV exportieren</button>
+            <button type="submit" disabled class="btn">CSV exportieren</button>
         </form>
     </div>
 {% endblock %}

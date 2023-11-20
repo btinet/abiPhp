@@ -138,6 +138,7 @@
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy" />
       <path value="$PROJECT_DIR$/vendor/h4cc/wkhtmltopdf-amd64" />
       <path value="$PROJECT_DIR$/vendor/parsecsv/php-parsecsv" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tcpdf" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
