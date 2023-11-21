@@ -12,6 +12,9 @@ class AppController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
+        if($this->getUser()) {
+            return $this->redirectToRoute('app_pupil_crud_index');
+        }
         return $this->render('app/index.html.twig', [
             'local_nav' => 'pupil'
         ]);

@@ -6,7 +6,15 @@
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
 
         <title>{% block title %}Prüfungsübersicht für {{ pupil }}{% endblock %}</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" media="screen" crossorigin="anonymous">
+
+        <style>
+            @page { margin: 10px; }
+            html, body { margin: 10px;
+                font-family: 'arial', sans-serif;
+                font-size: 9pt;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -21,7 +29,7 @@
                                 <h3><b>{{ pupil }}</b></h3>
                             </th>
                             <td class="text-right">
-                                <img src="{{  absolute_url(asset('build/images/tk.svg') ) }}" alt="Treptow-Kolleg Logo" height="103" width="103">
+                                <!--<img src="{{  absolute_url(asset('build/images/tk.svg') ) }}" alt="Treptow-Kolleg Logo" height="103" width="103"> /-->
                             </td>
                         </tr>
                         <tr>

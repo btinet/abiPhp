@@ -13,6 +13,8 @@ use App\Repository\GradeRepository;
 use App\Repository\PupilRepository;
 use App\Service\SortService;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,8 +41,16 @@ class PupilCrudController extends AbstractController
     }
 
     #[Route('/{id}/export/pdf', name: 'export_pdf')]
-    public function pdfAction( Pupil $pupil, Environment $twig, Pdf $pdf, EntrypointLookupInterface $entrypointLookup, ExamRepository $examRepository, GradeRepository $gradeRepository): Response
+    public function pdfAction( Pupil $pupil, Environment $twig, EntrypointLookupInterface $entrypointLookup, ExamRepository $examRepository, GradeRepository $gradeRepository)
     {
+        // Versuch ohne WKHTMLTOPDF
+        $pdfOptions = new Options();
+        $pdfOptions->setIsPhpEnabled(true);
+        $pdfOptions->setIsJavascriptEnabled(true);
+        $pdfOptions->setIsRemoteEnabled(true);
+        $pdfOptions->setDefaultFont("Arial");
+        $pdf2 = new Dompdf($pdfOptions);
+
         if($examPointsArray = $examRepository->sumExamPoints($pupil)) {
             $examPoints = array_pop($examPointsArray[0]);
         } else {
@@ -98,8 +108,8 @@ class PupilCrudController extends AbstractController
         }
 
         $this->twig = $twig;
-        $this->pdf = $pdf;
-        $this->pdf->setOption('enable-local-file-access', true);
+        //$this->pdf = $pdf;
+        //$this->pdf->setOption('enable-local-file-access', true);
         $this->entrypointLookup = $entrypointLookup;
         $this->entrypointLookup->reset();
         $html = $this->twig->render('pdf_base.html.twig', [
@@ -110,18 +120,25 @@ class PupilCrudController extends AbstractController
             'extended_exams' => $extendedExams,
             'diff' => $diff + $qualificationPoints,
         ]);
-        $pdf = $this->pdf->getOutputFromHtml($html);
+        //$pdf = $this->pdf->getOutputFromHtml($html);
+        $pdf2->setPaper('A4');
+        $pdf2->loadHtml($html);
+        $pdf2->render();
 
         $filename = sprintf('%s-%s.pdf',$pupil, date('Y-m-d'));
 
-        return new Response(
-            $pdf,
+
+
+         return new Response(
+            $pdf2->output(),
             200,
             [
                 'Content-Type'        => 'application/pdf',
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
             ]
         );
+
+
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
