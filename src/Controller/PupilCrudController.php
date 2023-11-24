@@ -13,9 +13,9 @@ use App\Repository\GradeRepository;
 use App\Repository\PupilRepository;
 use App\Service\SortService;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Css\Stylesheet;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,6 +50,9 @@ class PupilCrudController extends AbstractController
         $pdfOptions->setIsRemoteEnabled(true);
         $pdfOptions->setDefaultFont("Arial");
         $pdf2 = new Dompdf($pdfOptions);
+        $css = new Stylesheet($pdf2);
+        $css->load_css_file("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
+        //$pdf2->setCss($css);
 
         if($examPointsArray = $examRepository->sumExamPoints($pupil)) {
             $examPoints = array_pop($examPointsArray[0]);
